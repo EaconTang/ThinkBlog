@@ -1,0 +1,71 @@
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link href="/static/css/home.css" rel="stylesheet" type="text/css">
+    <!-- <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">-->
+    <link rel="shortcut icon" href="/static/image/eacon.jpg">
+
+    <title>何必快乐呢</title>
+
+  </head>
+  　　
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">何必快乐呢</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#">主页</a></li>
+                <li><a href="https://www.zhihu.com/people/tyingk">知乎</a></li>
+                <li><a href="https://github.com/EaconTang">GitHub</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="row" style="padding-top: 70px">
+  <div class="container center-block">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">博客列表</h3>
+        </div>
+        <ul class="list-group">
+            {%  for blog in blog_list %}
+              <li class="list-group-item title">
+                <a href="{{ blog.md_url }}">{{ blog.md_filename }}</a>
+              </li>
+            {% endfor %}
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+    </div>
+  </div>
+</div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,54 @@
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+{#    <link href="/static/css/home.css" rel="stylesheet" type="text/css">#}
+    <link href="/static/css/article.css" rel="stylesheet" type="text/css">
+{#    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">#}
+    <link rel="shortcut icon" href="/static/image/eacon.jpg">
+
+    <title>{{ article_md_object.md_filename }}</title>
+
+  </head>
+
+    <body>
+        <div align="center">
+            <div class="navbar-font">
+        <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
+
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">主页</a></li>
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+
+        </nav>
+
+    </div>
+
+
+
+
+        <div class="article-body">
+            {{ article_html|safe }}
+        </div>
+
+        </div>
+    </body>
+</html>
