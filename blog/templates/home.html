@@ -30,9 +30,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#">主页</a></li>
-                <li><a href="https://www.zhihu.com/people/tyingk">知乎</a></li>
-                <li><a href="https://github.com/EaconTang">GitHub</a></li>
+                <li><a href="http://www.tangyingkang.com/" target="_blank">主页</a></li>
+                <li><a href="http://www.zhihu.com/people/tyingk" target="_blank">知乎</a></li>
+                <li><a href="https://github.com/EaconTang" target="_blank">GitHub</a></li>
+
+                <li class="active"><a href="#">博客</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -49,7 +51,7 @@
         <ul class="list-group">
             {%  for blog in blog_list %}
               <li class="list-group-item title">
-                <a href="{{ blog.md_url }}">{{ blog.md_filename }}</a>
+                <a href="http://www.tangyingkang.com/blog/{{ blog.md_url }}/" target="blank">{{ blog.md_filename }}</a>
               </li>
             {% endfor %}
 

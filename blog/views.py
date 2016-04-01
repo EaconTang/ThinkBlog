@@ -1,9 +1,5 @@
 # coding=utf-8
-# from __future__ import unicode_literals
-import os
-from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from MyBlog.settings import BASE_DIR
 import markdown
 from .utils import MDResponse
 from .models import MDFile

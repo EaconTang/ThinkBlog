@@ -1,11 +1,12 @@
 from django.db import models
+from .utils import markdown_syntax
 
 # Create your models here.
 class MDFile(models.Model):
     # md_id = models.AutoField(primary_key=True, verbose_name="md_id", auto_created=True)
     md_url = models.CharField(max_length=256, unique=True)
     md_filename = models.CharField(max_length=128, unique=True)
-    md_text = models.TextField(blank=True)
+    md_text = models.TextField(blank=True, help_text=markdown_syntax())
     md_pub_time = models.DateTimeField(verbose_name='publish date', null=True)
     md_mod_time = models.DateTimeField(verbose_name='modify date', null=True)
     md_modified = models.NullBooleanField()
