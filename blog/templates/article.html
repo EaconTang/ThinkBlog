@@ -1,3 +1,4 @@
+{%  load duoshuo_tags %}
 <html>
   <head>
 
@@ -27,12 +28,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a class="navbar-brand" href="#">{{ site_title }}</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="/blog/">博客</a></li>
+{#                <li><a href="http://www.zhihu.com/people/tyingk" target="_blank">知乎</a></li>#}
+{#                <li><a href="https://github.com/EaconTang" target="_blank">GitHub</a></li>#}
+                    <li id="tu-cao"><a href="#ds-comments" onclick="showComments()" title="猛戳这里对本文进行吐槽">吐槽</a></li>
+                    <li><a href="/tag/">标签</a></li>
+                    <li><a href="/category/techblog/">技术博客</a></li>
+                    <li><a href="/">主页</a></li>
 
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -42,13 +49,26 @@
 
     </div>
 
-
-
-
         <div class="article-body">
             {{ article_html|safe }}
         </div>
 
+        <div class="duoshuo-comment">
+            <div id="ds-comments" style="display: none">
+                {% duoshuo_comments %}
+            </div>
         </div>
+
+        </div>
+
+    <script>
+        function showComments(){
+            document.getElementById("ds-comments").style.display = "inline";
+            document.getElementById("tu-cao").setAttribute("class", "active");
+        }
+        function hideComments(){
+            document.getElementById("ds-comments").style.display = "none";
+        }
+    </script>
     </body>
 </html>

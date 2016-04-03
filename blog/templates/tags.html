@@ -1,11 +1,10 @@
-{% load duoshuo_tags %}
 <html>
   <head>
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <link href="/static/css/home.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/tags.css" rel="stylesheet" type="text/css">
     <!-- <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">-->
     <link rel="shortcut icon" href="/static/image/eacon.jpg">
 
@@ -14,8 +13,7 @@
   </head>
   　　
   <body>
-
-    <div id="main-body">
+  <div>
 
     <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
     <div class="container-fluid">
@@ -33,8 +31,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-
-                <li><a href="/tag/">标签</a></li>
+                <li class="active"><a href="/tag/">标签</a></li>
                 <li><a href="/category/techblog/">技术博客</a></li>
                 <li><a href="/">主页</a></li>
 
@@ -49,12 +46,12 @@
         <div class="col-md-8 col-sm-12">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">文章列表</h3>
+              <h3 class="panel-title">标签列表</h3>
             </div>
             <ul class="list-group">
-                {%  for blog in blog_list %}
-                  <li class="list-group-item">
-                    <p class="each-blog"><a href="/{{ blog.md_url }}/" title="{{ blog.md_summary }}">{{ blog.md_filename }}</a></p>
+                {%  for tag in tags %}
+                  <li class="list-group-item title">
+                    <p class="each-blog"><a href="/tag/{{ tag.md_tag_url }}/">{{ tag.md_tag_name }}</a></p>
                   </li>
                 {% endfor %}
 
@@ -65,12 +62,9 @@
         <div class="col-md-2">
         </div>
       </div>
-
     </div>
 
-    </div>
-
-
+  </div>
 {##}
 {#    <footer class="footer">#}
 {#      <div class="container">#}

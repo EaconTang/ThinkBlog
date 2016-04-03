@@ -1,4 +1,3 @@
-{% load duoshuo_tags %}
 <html>
   <head>
 
@@ -14,8 +13,7 @@
   </head>
   　　
   <body>
-
-    <div id="main-body">
+  <div>
 
     <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
     <div class="container-fluid">
@@ -35,7 +33,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li><a href="/tag/">标签</a></li>
-                <li><a href="/category/techblog/">技术博客</a></li>
+                <li class="active"><a href="/category/techblog/">技术博客</a></li>
                 <li><a href="/">主页</a></li>
 
             </ul>
@@ -49,12 +47,12 @@
         <div class="col-md-8 col-sm-12">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">文章列表</h3>
+              <h3 class="panel-title">文章列表[{{ category_name }}]</h3>
             </div>
             <ul class="list-group">
                 {%  for blog in blog_list %}
-                  <li class="list-group-item">
-                    <p class="each-blog"><a href="/{{ blog.md_url }}/" title="{{ blog.md_summary }}">{{ blog.md_filename }}</a></p>
+                  <li class="list-group-item title">
+                    <p class="each-blog"><a href="/{{ blog.md_url }}/">{{ blog.md_filename }}</a></p>
                   </li>
                 {% endfor %}
 
@@ -65,12 +63,9 @@
         <div class="col-md-2">
         </div>
       </div>
-
     </div>
 
-    </div>
-
-
+  </div>
 {##}
 {#    <footer class="footer">#}
 {#      <div class="container">#}

@@ -1,40 +1,23 @@
 # coding=utf-8
+from __future__ import unicode_literals
 from django.shortcuts import render_to_response
-import markdown
-from .utils import MDResponse
-from .models import MDFile
+import markdown2
+from .utils import MDResponse, MarkdownRender
+from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL
+from MyBlog import settings
 
-# Create your views here.
-# def index(request):
-#     # with open("index.md") as f:
-#         # return HttpResponse(content=markdown.markdown(f.read()))
-#     return MDResponse(filename="index")
-#
-# def cmd_markdown(request):
-#     return MDResponse(filename="cmd-markdown")
-#
-# def test(request):
-#     return MDResponse(filename="test")
 
-def home(request):
-    blog_list = MDFile.objects.all()
-    # res = '<ul>\n'
-    # for each in _all:
-    #     # res += ''.join(['<li>', each.md_filename, '(Visit: ', str(each.md_visit), ') </li>\n'])
-    #     file_with_url = '<a href="{}">{}</a>'.format(each.md_url, each.md_filename)
-    #     res += '<li> {} (visit: {}) </li>\n'.format(file_with_url, each.md_visit)
-    # res += '</ul>'
-    # return HttpResponse(res)
-    context = {}
-    # blog_list = []
-    # for each in _all:
-    #     blog_list.append('<a href="{}">{}</a>'.format(each.md_url, each.md_filename))
+def home(request, version="online"):
+    blog_list = MDFile.objects.all().order_by('-md_pub_time')
+    site_info = SiteInfo.objects.get(site_version=version)
+    site_info.site_visit += 1
     context = {
         'blog_list': blog_list,
+        'site_visit': site_info.site_visit,
+        'site_title': settings.SITE_TITLE,
     }
+    site_info.save()
     return render_to_response("home.html", context)
-
-
 
 
 def get_by_name(request, filename):
@@ -42,20 +25,46 @@ def get_by_name(request, filename):
     return MDResponse(md_text=md_text)
 
 
-def get_by_url(request, url):
+def get_blog_by_url(request, url):
     md_object = MDFile.objects.get(md_url=url)
     md_text = md_object.md_text
-    # return MDResponse(md_text=md_text)
-    article_body = markdown.markdown(md_text)
+    article_body = markdown2.markdown(md_text)
     context = {
         'article_html': article_body,
         "article_md_text": md_text,
-        'article_md_object': md_object
+        'article_md_object': md_object,
+        'site_title': settings.SITE_TITLE,
     }
-    # return render_to_response("article.html", context)
-    # with open(os.path.join(BASE_DIR, "blog/templates/article.html")) as f:
-    #     html = f.read().decode(encoding="utf-8")
-    # html.replace("{{ article_body }}", article_body)
-    # return HttpResponse(content=b"{}".format(html),)
 
     return render_to_response("article.html", context)
+
+
+def get_tags(request):
+    all_tags = MDFileTagURL.objects.all()
+    context = {
+        "tags": all_tags,
+        "site_title": settings.SITE_TITLE,
+    }
+    return render_to_response("tags.html", context)
+
+
+def get_list_by_tag(request, tag_url):
+    tag_name = MDFileTagURL.objects.get(md_tag_url=tag_url).md_tag_name
+    blog_list = MDFile.objects.filter(md_tag=tag_name).order_by("-md_pub_time")
+    context = {
+        'blog_list': blog_list,
+        'tag_name': tag_name,
+        "site_title": settings.SITE_TITLE,
+    }
+    return render_to_response("blogs_by_tag.html", context)
+
+
+def get_list_by_category(request, category_url):
+    category_name = MDFileCategoryURL.objects.get(md_category_url=category_url).md_category_name
+    blog_list = MDFile.objects.filter(md_category=category_name).order_by('-md_pub_time')
+    context = {
+        'blog_list': blog_list,
+        'category_name': category_name,
+        'site_title': settings.SITE_TITLE,
+    }
+    return render_to_response("blogs_by_category.html", context)

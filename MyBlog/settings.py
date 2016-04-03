@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Django settings for MyBlog project.
 
@@ -12,6 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.conf.locale.en import formats as formats_en
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,6 +30,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["www.tangyingkang.com", "localhost"]
 
+#
+DUOSHUO_SECRET = "74cd6131489314687b1433fceb9aa985"
+DUOSHUO_SHORT_NAME = "eacon"
 
 # Application definition
 
@@ -39,6 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'blog',
+    'duoshuo',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -89,7 +96,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -111,3 +118,11 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
+
+
+# display formated datetime field on django-admin
+formats_en.DATETIME_FORMAT = 'Y-m-d H:m:s'
+
+
+#
+SITE_TITLE = "" or "Eacon"

@@ -1,34 +1,91 @@
+# coding=utf-8
 from django.db import models
 from .utils import markdown_syntax
 
+
+class SiteInfo(models.Model):
+    site_version = models.CharField(verbose_name="Site Version", default="0.0", max_length=32)
+    site_visit = models.IntegerField(verbose_name="Site Visits", default=0)
+    site_copyright = models.TextField(verbose_name="Site copyright", null=True)
+
+    def __unicode__(self):
+        return self.site_version
+
+    class Meta:
+        verbose_name_plural = verbose_name = "网站信息"
+
+
+class MDFileCategory(models.Model):
+    md_category_name = models.CharField(verbose_name="CategoryName", max_length=32, unique=True)
+
+    def __unicode__(self):
+        return self.md_category_name
+
+    class Meta:
+        verbose_name_plural = verbose_name = "分类"
+
+
+class MDFileCategoryURL(models.Model):
+    md_category_url = models.CharField(max_length=64)
+    md_category_name = models.OneToOneField(MDFileCategory)
+
+    def __unicode__(self):
+        return self.md_category_url
+
+    class Meta:
+        verbose_name_plural = verbose_name = "分类-网址"
+
+
+class MDFileTag(models.Model):
+    md_tag_name = models.CharField(verbose_name="TagName", max_length=32, unique=True)
+
+    def __unicode__(self):
+        return self.md_tag_name
+
+    class Meta:
+        verbose_name_plural = verbose_name = "标签"
+
+
+class MDFileTagURL(models.Model):
+    md_tag_name = models.OneToOneField(MDFileTag)
+    md_tag_url = models.CharField(max_length=64)
+
+    def __unicode__(self):
+        return self.md_tag_url
+
+    class Meta:
+        verbose_name_plural = verbose_name = "标签-网址"
+
+
 # Create your models here.
 class MDFile(models.Model):
-    # md_id = models.AutoField(primary_key=True, verbose_name="md_id", auto_created=True)
-    md_url = models.CharField(max_length=256, unique=True)
-    md_filename = models.CharField(max_length=128, unique=True)
-    md_text = models.TextField(blank=True, help_text=markdown_syntax())
-    md_pub_time = models.DateTimeField(verbose_name='publish date', null=True)
-    md_mod_time = models.DateTimeField(verbose_name='modify date', null=True)
+    md_url = models.CharField(verbose_name="URL", max_length=256, unique=True)
+    md_filename = models.CharField(verbose_name="Title", max_length=128, unique=True)
+    md_text = models.TextField(verbose_name="Text", blank=True, help_text=markdown_syntax())
+    md_pub_time = models.DateTimeField(verbose_name='Publish Time', null=True)
+    md_mod_time = models.DateTimeField(verbose_name='Modify Time', null=True, auto_now=True)
     md_modified = models.NullBooleanField()
-    md_visit = models.IntegerField(null=True)
+    md_visit = models.IntegerField(verbose_name="Visits", null=True)
+    md_category = models.ManyToManyField(MDFileCategory, verbose_name="Category", null=True, default="uncategorized")
+    md_tag = models.ManyToManyField(MDFileTag, verbose_name="Tag", null=True, default="untagged")
+    md_summary = models.TextField(blank=True)
 
     def __unicode__(self):
         return self.md_filename
 
+    class Meta:
+        verbose_name_plural = verbose_name = "博客"
 
-class MDFileCategory(models.Model):
-    md_category_name = models.CharField(max_length=32, unique=True)
-    
-    def __unicode__(self):
-        return self.md_category_name
-    
+    @property
+    def tags(self):
+        """
+        :return: tags of a blog to be displayed in django-admin
+        """
+        return ' | '.join([str(tag) for tag in self.md_tag.all()])
 
-class MDFileTag(models.Model):
-    md_tag_name = models.CharField(max_length=32, unique=True)
-    # md_file = models.ForeignKey(MDFile, on_delete=models.CASCADE)
-
-    def __unicode__(self):
-        return self.md_tag_name
+    @property
+    def categories(self):
+        return ' | '.join([str(catgr) for catgr in self.md_category.all()])
 
 
 class MDFileComment(models.Model):
@@ -36,8 +93,10 @@ class MDFileComment(models.Model):
     md_comment_mail = models.EmailField(blank=True)
     md_comment_time = models.DateTimeField('comment time', null=True)
     md_comment = models.TextField()
-    # md_file = models.ForeignKey(MDFile, on_delete=models.CASCADE)
+    md_file = models.ForeignKey(MDFile, on_delete=models.CASCADE, null=True)
 
     def __unicode__(self):
-        return self.md_comment
+        return self.id
 
+    class Meta:
+        verbose_name_plural = verbose_name = "评论"

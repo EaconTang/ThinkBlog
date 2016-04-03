@@ -3,10 +3,17 @@
     font-family:"lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-size: 18px;
     margin: 5% 20% 5% 20%;
-    padding: 2% 5% 5% 5%;
-    width: 50%;
+    padding: 2% 5% 2% 5%;
+    width: 60%;
     line-height: 150%;
-    border: 1px solid LightGrey;
+    border: 2px solid LightGrey;
+}
+
+.duoshuo-comment {
+    padding: 2% 5% 5% 5%;
+    width: 70%;
+    text-align: center;
+    font-family:"lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 
 .navbar-font {
@@ -16,14 +23,22 @@
 
 H1 {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding: 5px;
+    border-bottom: 2px LightGrey solid;
+    width: 98%;
+    line-height: 160%;
+    color: #666666;
+    text-align: center;
 }
 
 H2 {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
-    margin-bottom: 60px;
-    margin-bottom: 40px;
+    margin-top: 20px;
+    margin-bottom: 30px;
     padding: 5px;
-    border-bottom: 2px LightGrey solid;
+    border-bottom: 1px LightGrey solid;
     width: 98%;
     line-height: 150%;
     color: #666666;
@@ -32,8 +47,8 @@ H2 {
 
 H3 {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
-    margin-top: 40px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     border-bottom: 1px LightGrey solid;
     width: 98%;
     line-height: 150%;
@@ -43,8 +58,8 @@ H3 {
 
 H4 {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
-    margin-top: 40px;
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     border-bottom: 1px LightGrey solid;
     width: 98%;
     line-height: 150%;

@@ -6,6 +6,9 @@ urlpatterns = [
     url(r'^$', 'blog.views.home', name='home'),
     # url(r'^$', include('blog.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^tag/$', 'blog.views.get_tags', name='get_tags'),
+    url(r'^tag/(\S+)/$', 'blog.views.get_list_by_tag', name='get_list_by_tag'),
+    url(r'^category/(\S+)/$', 'blog.views.get_list_by_category', name='get_list_by_category'),
 
-    url(r'^(\S+)/$', 'blog.views.get_by_url', name='get_by_url'),
+    url(r'^(\S+)/$', 'blog.views.get_blog_by_url', name='get_blog_by_url'),
 ]

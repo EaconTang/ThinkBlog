@@ -1,13 +1,6 @@
-
 body {
     font-family: STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
     font-size: 18px;
-}
-
-body html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
 }
 
 .title a {
@@ -43,22 +36,7 @@ li.title:hover {
     margin: auto;
 }
 
-.wraper {
-    min-height: 100%;
-}
-
-.wraper-main {
-    padding-bottom: 30px;
-    overflow: hidden;
-}
-
-.for-footer {
-    margin-top: -30px;
-    height: 30px;
-}
-
-.duoshuo {
+.my-footer {
+    min-height: auto;
     text-align: center;
-    width: 60%;
-    margin: 5% 20% 5% 20%;
 }
