@@ -47,13 +47,27 @@
         <div class="col-md-8 col-sm-12">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">文章列表[{{ tag_name }}]</h3>
+              <h3 class="panel-title">{{ tag_name }}({{ blog_counts }})</h3>
             </div>
             <ul class="list-group">
                 {%  for blog in blog_list %}
                   <li class="list-group-item title">
-                    <p class="each-blog"><a href="/{{ blog.md_url }}/">{{ blog.md_filename }}</a></p>
+                  <div>
+                    <div>
+                        <p class="each-blog">
+                            <p id="each-blog-title">
+                            <a href="/{{ blog.md_url }}/" title="{{ blog.md_summary }}">{{ blog.md_filename }}</a>
+                            </p>
+                        </p>
+                        <p class="each-blog-info">
+                            Date: {{ blog.md_pub_time | date }} | Visit: {{ blog.md_visit }} | Tags: {{ blog.tags }}
+                        </p>
+
+                    </div>
+                  </div>
+
                   </li>
+
                 {% endfor %}
 
             </ul>

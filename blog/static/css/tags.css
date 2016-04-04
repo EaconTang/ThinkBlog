@@ -1,6 +1,34 @@
+
 body {
     font-family: STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
     font-size: 18px;
+}
+
+body html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#main-body {
+    height: auto;
+    height: 90%;
+    position: relative;
+}
+
+#main-content {
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+#for-footer {
+    margin-top: -40px;
+    height: 30px;
+    clear: both;
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    color: darkgrey;
 }
 
 .title a {
@@ -17,26 +45,31 @@ li.title:hover {
 
 .panel {
     border-radius: 0;
-    text-align: center;
 }
 
 .panel-default > .panel-heading {
 	background-image: none;
-	background-color: #fff;
+	/*background-color: #fff;*/
+    text-align: center;
+    color: gray;
+}
+
+.panel-title {
+    font-size: 18px;
+}
+
+.each-tag {
+    text-align: center;
 }
 
 .navbar-default {
 	background-image: none;
 	background-color: #fff;
-  box-shadow: none;
+    box-shadow: none;
 }
 
-.each-blog {
-    font-size: 20px;
-    margin: auto;
-}
-
-.my-footer {
-    min-height: auto;
+.duoshuo {
     text-align: center;
+    width: 60%;
+    margin: 5% 20% 5% 20%;
 }

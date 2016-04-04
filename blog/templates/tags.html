@@ -46,12 +46,12 @@
         <div class="col-md-8 col-sm-12">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">标签列表</h3>
+              <h3 class="panel-title">标签列表({{ tags_counts }})</h3>
             </div>
             <ul class="list-group">
                 {%  for tag in tags %}
                   <li class="list-group-item title">
-                    <p class="each-blog"><a href="/tag/{{ tag.md_tag_url }}/">{{ tag.md_tag_name }}</a></p>
+                    <p class="each-tag"><a href="/tag/{{ tag.md_tag_url }}/">{{ tag.md_tag_name }}({{ tag.blogs_for_tagURL }})</a></p>
                   </li>
                 {% endfor %}
 

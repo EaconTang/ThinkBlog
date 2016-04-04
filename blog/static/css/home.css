@@ -2,6 +2,7 @@
 body {
     font-family: STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
     font-size: 18px;
+
 }
 
 body html {
@@ -11,24 +12,26 @@ body html {
 }
 
 #main-body {
-    min-height: 95%;
     height: auto;
-    height: 95%;
+    height: 90%;
     position: relative;
 }
 
 #main-content {
     margin: 0 auto;
-    padding-bottom: 30px;
+    padding-bottom: 40px;
 }
 
 #for-footer {
-    margin-top: -30px;
+    display: block;
+    margin-top: -40px;
     height: 30px;
-    min-height: 5%;
     clear: both;
     position: relative;
     text-align: center;
+    font-size: 14px;
+    color: darkgrey;
+    background-image: none;
 }
 
 .title a {
@@ -45,37 +48,37 @@ li.title:hover {
 
 .panel {
     border-radius: 0;
-    text-align: center;
 }
 
 .panel-default > .panel-heading {
 	background-image: none;
-	background-color: #fff;
+	/*background-color: #fff;*/
+    text-align: center;
+    color: gray;
+}
+
+.panel-title {
+    font-size: 18px;
 }
 
 .navbar-default {
 	background-image: none;
 	background-color: #fff;
-  box-shadow: none;
+    box-shadow: none;
 }
 
 .each-blog {
-    font-size: 20px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
     margin: auto;
 }
 
-.wraper {
-    min-height: 100%;
+.each-blog-title {
+    font-size: 50px;
 }
 
-.wraper-main {
-    padding-bottom: 30px;
-    overflow: hidden;
-}
-
-.for-footer {
-    margin-top: -30px;
-    height: 30px;
+.each-blog-info {
+    font-size: 14px;
+    color: darkgray;
 }
 
 .duoshuo {

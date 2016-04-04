@@ -7,12 +7,12 @@
     width: 60%;
     line-height: 150%;
     border: 2px solid LightGrey;
+    /*background-color: #f2efea;*/
 }
 
 .duoshuo-comment {
     padding: 2% 5% 5% 5%;
     width: 70%;
-    text-align: center;
     font-family:"lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 

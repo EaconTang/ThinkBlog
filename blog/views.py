@@ -8,11 +8,13 @@ from MyBlog import settings
 
 
 def home(request, version="online"):
-    blog_list = MDFile.objects.all().order_by('-md_pub_time')
+    blog_list = MDFile.objects.all().exclude(md_draft=True).order_by('-md_pub_time')
+    blog_counts = blog_list.count()
     site_info = SiteInfo.objects.get(site_version=version)
     site_info.site_visit += 1
     context = {
         'blog_list': blog_list,
+        'blog_counts': blog_counts,
         'site_visit': site_info.site_visit,
         'site_title': settings.SITE_TITLE,
     }
@@ -29,9 +31,10 @@ def get_blog_by_url(request, url):
     md_object = MDFile.objects.get(md_url=url)
     md_text = md_object.md_text
     article_body = markdown2.markdown(md_text)
+    md_object.md_visit += 1
+    md_object.save()
     context = {
         'article_html': article_body,
-        "article_md_text": md_text,
         'article_md_object': md_object,
         'site_title': settings.SITE_TITLE,
     }
@@ -41,8 +44,10 @@ def get_blog_by_url(request, url):
 
 def get_tags(request):
     all_tags = MDFileTagURL.objects.all()
+    tags_counts = all_tags.count()
     context = {
         "tags": all_tags,
+        "tags_counts": tags_counts,
         "site_title": settings.SITE_TITLE,
     }
     return render_to_response("tags.html", context)
@@ -50,9 +55,11 @@ def get_tags(request):
 
 def get_list_by_tag(request, tag_url):
     tag_name = MDFileTagURL.objects.get(md_tag_url=tag_url).md_tag_name
-    blog_list = MDFile.objects.filter(md_tag=tag_name).order_by("-md_pub_time")
+    blog_list = MDFile.objects.filter(md_tag=tag_name).exclude(md_draft=True).order_by("-md_pub_time")
+    blog_counts = blog_list.count()
     context = {
         'blog_list': blog_list,
+        'blog_counts': blog_counts,
         'tag_name': tag_name,
         "site_title": settings.SITE_TITLE,
     }
@@ -61,9 +68,11 @@ def get_list_by_tag(request, tag_url):
 
 def get_list_by_category(request, category_url):
     category_name = MDFileCategoryURL.objects.get(md_category_url=category_url).md_category_name
-    blog_list = MDFile.objects.filter(md_category=category_name).order_by('-md_pub_time')
+    blog_list = MDFile.objects.filter(md_category=category_name).exclude(md_draft=True).order_by('-md_pub_time')
+    blog_counts = blog_list.count()
     context = {
         'blog_list': blog_list,
+        'blog_counts': blog_counts,
         'category_name': category_name,
         'site_title': settings.SITE_TITLE,
     }

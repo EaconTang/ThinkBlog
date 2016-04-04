@@ -24,6 +24,10 @@ class MDFileCategory(models.Model):
     class Meta:
         verbose_name_plural = verbose_name = "分类"
 
+    @property
+    def blogs_for_category(self):
+        return self.mdfile_set.all().exclude(md_draft=True).count()
+
 
 class MDFileCategoryURL(models.Model):
     md_category_url = models.CharField(max_length=64)
@@ -35,6 +39,10 @@ class MDFileCategoryURL(models.Model):
     class Meta:
         verbose_name_plural = verbose_name = "分类-网址"
 
+    @property
+    def blogs_for_categoryURL(self):
+        return self.md_category_name.blogs_for_category
+
 
 class MDFileTag(models.Model):
     md_tag_name = models.CharField(verbose_name="TagName", max_length=32, unique=True)
@@ -44,6 +52,10 @@ class MDFileTag(models.Model):
 
     class Meta:
         verbose_name_plural = verbose_name = "标签"
+
+    @property
+    def blogs_for_tag(self):
+        return self.mdfile_set.all().exclude(md_draft=True).count()
 
 
 class MDFileTagURL(models.Model):
@@ -55,6 +67,10 @@ class MDFileTagURL(models.Model):
 
     class Meta:
         verbose_name_plural = verbose_name = "标签-网址"
+
+    @property
+    def blogs_for_tagURL(self):
+        return self.md_tag_name.blogs_for_tag
 
 
 # Create your models here.
@@ -69,6 +85,7 @@ class MDFile(models.Model):
     md_category = models.ManyToManyField(MDFileCategory, verbose_name="Category", null=True, default="uncategorized")
     md_tag = models.ManyToManyField(MDFileTag, verbose_name="Tag", null=True, default="untagged")
     md_summary = models.TextField(blank=True)
+    md_draft = models.NullBooleanField(default=False)
 
     def __unicode__(self):
         return self.md_filename
@@ -81,11 +98,11 @@ class MDFile(models.Model):
         """
         :return: tags of a blog to be displayed in django-admin
         """
-        return ' | '.join([str(tag) for tag in self.md_tag.all()])
+        return '/'.join([str(tag) for tag in self.md_tag.all()])
 
     @property
     def categories(self):
-        return ' | '.join([str(catgr) for catgr in self.md_category.all()])
+        return '/'.join([str(catgr) for catgr in self.md_category.all()])
 
 
 class MDFileComment(models.Model):

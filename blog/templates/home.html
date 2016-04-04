@@ -17,6 +17,8 @@
 
     <div id="main-body">
 
+    <div id="main-content">
+
     <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -36,7 +38,7 @@
 
                 <li><a href="/tag/">标签</a></li>
                 <li><a href="/category/techblog/">技术博客</a></li>
-                <li><a href="/">主页</a></li>
+                <li class="active"><a href="/">主页</a></li>
 
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -49,12 +51,25 @@
         <div class="col-md-8 col-sm-12">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">文章列表</h3>
+              <h3 class="panel-title">所有博文({{ blog_counts }})</h3>
             </div>
             <ul class="list-group">
                 {%  for blog in blog_list %}
-                  <li class="list-group-item">
-                    <p class="each-blog"><a href="/{{ blog.md_url }}/" title="{{ blog.md_summary }}">{{ blog.md_filename }}</a></p>
+                  <li class="list-group-item title">
+                  <div>
+                    <div>
+                        <p class="each-blog">
+                            <p id="each-blog-title">
+                            <a href="/{{ blog.md_url }}/" title="{{ blog.md_summary }}">{{ blog.md_filename }}</a>
+                            </p>
+                        </p>
+                        <p class="each-blog-info">
+                            Date: {{ blog.md_pub_time | date }} | Visit: {{ blog.md_visit }} | Tags: {{ blog.tags }}
+                        </p>
+
+                    </div>
+                  </div>
+
                   </li>
                 {% endfor %}
 
@@ -64,11 +79,29 @@
 
         <div class="col-md-2">
         </div>
+
+    </div>
+
       </div>
 
     </div>
 
+
     </div>
+
+
+    <footer id="for-footer">
+        <hr/>
+        欢迎! 您是本站的第{{ site_visit }}位访客!
+        <br>
+        Designed by <a href="mailto:tyingk@163.com">Eacon</a>
+        |Inspired from <a target="_blank" href="http://www.yinwang.org">YinWang</a>
+        |Powered by <a href="https://www.djangoproject.com/">Django</a>
+        |Hosted on <a href="https://www.aliyun.com/?&lang=en">AliCloud</a>
+        <br>
+        Copyright&copy; 2015-2016 tangyingkang.com
+        <br>
+    </footer>
 
 
 {##}
