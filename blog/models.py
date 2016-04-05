@@ -5,8 +5,11 @@ from .utils import markdown_syntax
 
 class SiteInfo(models.Model):
     site_version = models.CharField(verbose_name="Site Version", default="0.0", max_length=32)
+    site_title = models.CharField(verbose_name="Site Title", blank=True, max_length=32)
     site_visit = models.IntegerField(verbose_name="Site Visits", default=0)
     site_copyright = models.TextField(verbose_name="Site copyright", null=True)
+    site_about_me = models.TextField(verbose_name="About Me", blank=True)
+    site_is_published = models.NullBooleanField(verbose_name="Published", default=False)
 
     def __unicode__(self):
         return self.site_version
@@ -73,7 +76,6 @@ class MDFileTagURL(models.Model):
         return self.md_tag_name.blogs_for_tag
 
 
-# Create your models here.
 class MDFile(models.Model):
     md_url = models.CharField(verbose_name="URL", max_length=256, unique=True)
     md_filename = models.CharField(verbose_name="Title", max_length=128, unique=True)

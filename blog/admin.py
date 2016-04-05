@@ -17,7 +17,7 @@ admin.site.register(MDFile, MDFileAdmin)
 
 
 class SiteInfoAdmin(admin.ModelAdmin):
-    list_display = ('site_version', 'site_visit', 'site_copyright')
+    list_display = ('site_version', 'site_visit', 'site_title', 'site_is_published')
 
 admin.site.register(SiteInfo, SiteInfoAdmin)
 

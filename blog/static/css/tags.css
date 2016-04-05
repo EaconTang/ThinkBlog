@@ -10,10 +10,19 @@ body html {
     padding: 0;
 }
 
+#nav-bar {
+    filter:alpha(opacity=20); /*ie透明度20%*/
+    -moz-opacity:0.8;        /*Moz + FF 透明度20%*/
+    opacity:0.8; /*支持CSS3的浏览器(FF1.5也支持)透明度20%*/
+}
+
 #main-body {
     height: auto;
     height: 90%;
     position: relative;
+    filter:alpha(opacity=20); /*ie透明度20%*/
+    -moz-opacity:0.8;        /*Moz + FF 透明度20%*/
+    opacity:0.8; /*支持CSS3的浏览器(FF1.5也支持)透明度20%*/
 }
 
 #main-content {
@@ -27,8 +36,8 @@ body html {
     clear: both;
     position: relative;
     text-align: center;
-    font-size: 14px;
-    color: darkgrey;
+    font-size: 15px;
+    color: ghostwhite;
 }
 
 .title a {

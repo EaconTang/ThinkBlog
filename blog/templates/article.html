@@ -9,6 +9,7 @@
     <link href="/static/css/article.css" rel="stylesheet" type="text/css">
 {#    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">#}
     <link rel="shortcut icon" href="/static/image/eacon.jpg">
+    <script src="/static/js/doComments.js"></script>
 
     <title>{{ article_md_object.md_filename }}</title>
 
@@ -18,7 +19,7 @@
         <div align="center">
 
         <div class="navbar-font">
-        <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
+        <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .8" role="navigation">
 
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -29,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">{{ site_title }}</a>
+                <a class="navbar-brand" href="#ds-comments" onclick="showComments()" title="猛戳这里狂喷本文" id="tu-cao">吐槽本文</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -37,7 +38,7 @@
                 <ul class="nav navbar-nav navbar-right">
 {#                <li><a href="http://www.zhihu.com/people/tyingk" target="_blank">知乎</a></li>#}
 {#                <li><a href="https://github.com/EaconTang" target="_blank">GitHub</a></li>#}
-                    <li id="tu-cao"><a href="#ds-comments" onclick="showComments()" id="tu-cao-a" title="猛戳这里对本文进行吐槽">吐槽</a></li>
+                    <li><a href="/about/">关于</a></li>
                     <li><a href="/tag/">标签</a></li>
                     <li><a href="/category/techblog/">技术博客</a></li>
                     <li><a href="/">主页</a></li>
@@ -54,22 +55,23 @@
             {{ article_html|safe }}
         </div>
 
+
         <div class="duoshuo-comment">
             <div id="ds-comments" style="display: none">
                 {% duoshuo_comments %}
             </div>
-        </div>
 
         </div>
 
-    <script>
-        function showComments(){
-            document.getElementById("ds-comments").style.display = "inline";
-            document.getElementById("tu-cao").setAttribute("class", "active");
-        }
-        function hideComments(){
-            document.getElementById("ds-comments").style.display = "none";
-        }
-    </script>
+{##}
+{#        <div>#}
+{#            <p>#}
+{#                <a href="#">回到顶部</a>#}
+{#            </p>#}
+{#        </div>#}
+
+        </div>
+
+
     </body>
 </html>

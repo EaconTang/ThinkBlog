@@ -2,19 +2,34 @@
 body {
     font-family: STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
     font-size: 18px;
-
+    background-attachment: fixed;
 }
 
 body html {
     height: 100%;
     margin: 0;
     padding: 0;
+
+}
+
+#nav-bar {
+    filter:alpha(opacity=20); /*ie透明度20%*/
+    -moz-opacity:0.8;        /*Moz + FF 透明度20%*/
+    opacity:0.8; /*支持CSS3的浏览器(FF1.5也支持)透明度20%*/
+
+}
+
+#nav-bar-content {
+
 }
 
 #main-body {
     height: auto;
     height: 90%;
     position: relative;
+    filter:alpha(opacity=20); /*ie透明度20%*/
+    -moz-opacity:0.8;        /*Moz + FF 透明度20%*/
+    opacity:0.8; /*支持CSS3的浏览器(FF1.5也支持)透明度20%*/
 }
 
 #main-content {
@@ -23,15 +38,13 @@ body html {
 }
 
 #for-footer {
-    display: block;
     margin-top: -40px;
     height: 30px;
     clear: both;
     position: relative;
     text-align: center;
-    font-size: 14px;
-    color: darkgrey;
-    background-image: none;
+    font-size: 15px;
+    color: ghostwhite;
 }
 
 .title a {

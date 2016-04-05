@@ -1,7 +1,6 @@
 
 body {
     font-family: STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
-    font-size: 18px;
     background-attachment: fixed;
 }
 
@@ -16,6 +15,8 @@ body html {
     filter:alpha(opacity=20); /*ie透明度20%*/
     -moz-opacity:0.8;        /*Moz + FF 透明度20%*/
     opacity:0.8; /*支持CSS3的浏览器(FF1.5也支持)透明度20%*/
+    font-size: 18px;
+
 
 }
 
@@ -52,11 +53,11 @@ body html {
 }
 
 .title {
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 li.title:hover {
-    background-color: #eee;
+    /*background-color: #eee;*/
 }
 
 .panel {
@@ -80,22 +81,14 @@ li.title:hover {
     box-shadow: none;
 }
 
-.each-blog {
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
-    margin: auto;
-}
 
-.each-blog-title {
-    font-size: 50px;
-}
-
-.each-blog-info {
-    font-size: 14px;
-    color: darkgray;
-}
 
 .duoshuo {
     text-align: center;
     width: 60%;
     margin: 5% 20% 5% 20%;
+}
+
+#about-me {
+    font-size: medium;
 }

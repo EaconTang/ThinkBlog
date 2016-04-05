@@ -12,10 +12,11 @@
 
   </head>
   　　
-  <body>
-  <div>
+  <body background="/static/image/yuantu06.jpg">
+  <div id="main-body">
+  <div id="main-content">
 
-    <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" id="nav-bar" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -31,6 +32,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="/about/">关于</a></li>
                 <li class="active"><a href="/tag/">标签</a></li>
                 <li><a href="/category/techblog/">技术博客</a></li>
                 <li><a href="/">主页</a></li>
@@ -65,13 +67,20 @@
     </div>
 
   </div>
+  </div>
+
 {##}
-{#    <footer class="footer">#}
-{#      <div class="container">#}
-{#          <div class="my-footrt">#}
-{#              <p class="text-muted">您是本页第{{ site_visit }}位访客</p>#}
-{#          </div>#}
-{#      </div>#}
+{#    <footer id="for-footer">#}
+{#        <hr/>#}
+{#        欢迎! 您是本站的第{{ site_visit }}位访客!#}
+{#        <br>#}
+{#        Designed by <a href="mailto:tyingk@163.com">Eacon</a>#}
+{#        |Inspired from <a target="_blank" href="http://www.yinwang.org">YinWang</a>#}
+{#        |Powered by <a href="https://www.djangoproject.com/">Django</a>#}
+{#        |Hosted on <a href="https://www.aliyun.com/?&lang=en">AliCloud</a>#}
+{#        <br>#}
+{#        Copyright&copy; 2015-2016 tangyingkang.com#}
+{#        <br>#}
 {#    </footer>#}
 
 {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>#}

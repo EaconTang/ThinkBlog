@@ -2,7 +2,7 @@
 """
 """
 from django.shortcuts import HttpResponse, render_to_response
-import markdown2
+import markdown2, markdown
 
 
 def html_response(*args, **kwargs):
@@ -21,7 +21,8 @@ class MDResponse(HttpResponse):
 
 class MarkdownRender(object):
     def __init__(self, text):
-        self._html = markdown2.markdown(text)
+        # self._html = markdown2.markdown(text)
+        self._html = markdown.markdown(text)
 
     @property
     def html(self):
