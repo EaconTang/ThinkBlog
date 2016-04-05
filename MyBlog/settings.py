@@ -124,5 +124,6 @@ TEMPLATE_DIRS = (
 formats_en.DATETIME_FORMAT = 'Y-m-d H:m:s'
 
 
-#
-SITE_TITLE = "" or "Eacon"
+
+# URL prefix for internet access
+URL_PREFIX = ""

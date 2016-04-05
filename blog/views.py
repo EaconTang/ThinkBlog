@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render_to_response
 from .utils import MDResponse, MarkdownRender
 from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL
+from MyBlog.settings import URL_PREFIX
 
 
 def home(request):
@@ -15,6 +16,7 @@ def home(request):
         'blog_counts': blog_counts,
         'site_visit': site_info.site_visit,
         'site_title': site_info.site_title,
+        "url_prefix": URL_PREFIX,
     }
     site_info.save()
     return render_to_response("home.html", context)
@@ -35,7 +37,8 @@ def get_blog_by_url(request, url):
     context = {
         'article_html': article_body,
         'article_md_object': md_object,
-        'site_title': site_info.site_title
+        'site_title': site_info.site_title,
+        "url_prefix": URL_PREFIX,
     }
 
     return render_to_response("article.html", context)
@@ -50,6 +53,7 @@ def get_tags(request):
         "tags_counts": tags_counts,
         "site_title": site_info.site_title,
         "site_visit": site_info.site_visit,
+        "url_prefix": URL_PREFIX,
 
     }
     return render_to_response("tags.html", context)
@@ -66,6 +70,7 @@ def get_list_by_tag(request, tag_url):
         'tag_name': tag_name,
         "site_title": site_info.site_title,
         "site_visit": site_info.site_visit,
+        "url_prefix": URL_PREFIX,
     }
     return render_to_response("blogs_by_tag.html", context)
 
@@ -81,6 +86,7 @@ def get_list_by_category(request, category_url):
         'category_name': category_name,
         'site_title': site_info.site_title,
         'site_visit': site_info.site_visit,
+        "url_prefix": URL_PREFIX,
     }
     return render_to_response("blogs_by_category.html", context)
 
@@ -91,5 +97,6 @@ def about_me(request):
     context = {
         "site_about_me": about_me_html,
         "site_title": site_info.site_title,
+        "url_prefix": URL_PREFIX,
     }
     return render_to_response("about.html", context)

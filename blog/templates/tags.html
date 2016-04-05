@@ -32,10 +32,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/about/">关于</a></li>
-                <li class="active"><a href="/tag/">标签</a></li>
-                <li><a href="/category/techblog/">技术博客</a></li>
-                <li><a href="/">主页</a></li>
+                <li><a href="{{ url_prefix }}/about/">关于</a></li>
+                <li class="active"><a href="{{ url_prefix }}/tag/">标签</a></li>
+                <li><a href="{{ url_prefix }}/category/techblog/">技术博客</a></li>
+                <li><a href="{{ url_prefix }}/">主页</a></li>
 
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -53,7 +53,7 @@
             <ul class="list-group">
                 {%  for tag in tags %}
                   <li class="list-group-item title">
-                    <p class="each-tag"><a href="/tag/{{ tag.md_tag_url }}/">{{ tag.md_tag_name }}({{ tag.blogs_for_tagURL }})</a></p>
+                    <p class="each-tag"><a href="{{ url_prefix }}/tag/{{ tag.md_tag_url }}/">{{ tag.md_tag_name }}({{ tag.blogs_for_tagURL }})</a></p>
                   </li>
                 {% endfor %}
 

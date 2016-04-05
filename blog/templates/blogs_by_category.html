@@ -33,10 +33,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
 
-                <li><a href="/about/">关于</a></li>
-                <li><a href="/tag/">标签</a></li>
-                <li class="active"><a href="/category/techblog/">技术博客</a></li>
-                <li><a href="/">主页</a></li>
+                <li><a href="{{ url_prefix }}/about/">关于</a></li>
+                <li><a href="{{ url_prefix }}/tag/">标签</a></li>
+                <li class="active"><a href="{{ url_prefix }}/category/techblog/">技术博客</a></li>
+                <li><a href="{{ url_prefix }}/">主页</a></li>
 
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -58,7 +58,7 @@
                     <div>
                         <p class="each-blog">
                             <p id="each-blog-title">
-                            <a href="/{{ blog.md_url }}/" title="{{ blog.md_summary }}">{{ blog.md_filename }}</a>
+                            <a href="{{ url_prefix }}/{{ blog.md_url }}/" title="{{ blog.md_summary }}">{{ blog.md_filename }}</a>
                             </p>
                         </p>
                         <p class="each-blog-info">
