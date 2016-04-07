@@ -3,7 +3,17 @@ from __future__ import unicode_literals
 from django.shortcuts import render_to_response
 from .utils import MDResponse, MarkdownRender
 from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL
-from MyBlog.settings import URL_PREFIX
+# from MyBlog.settings import URL_PREFIX
+from django import template
+from django.conf import settings
+
+URL_PREFIX = getattr(settings, "URL_PREFIX", "")
+register = template.Library()
+
+
+@register.simple_tag
+def settings_value(key_name):
+    return getattr(settings, key_name, None)
 
 
 def home(request):
@@ -11,6 +21,7 @@ def home(request):
     blog_counts = blog_list.count()
     site_info = SiteInfo.objects.get(site_is_published=True)
     site_info.site_visit += 1
+    site_info.save()
     context = {
         'blog_list': blog_list,
         'blog_counts': blog_counts,
@@ -18,7 +29,6 @@ def home(request):
         'site_title': site_info.site_title,
         "url_prefix": URL_PREFIX,
     }
-    site_info.save()
     return render_to_response("home.html", context)
 
 
@@ -34,6 +44,8 @@ def get_blog_by_url(request, url):
     md_object.md_visit += 1
     md_object.save()
     site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info.site_visit += 1
+    site_info.save()
     context = {
         'article_html': article_body,
         'article_md_object': md_object,
@@ -48,6 +60,8 @@ def get_tags(request):
     all_tags = MDFileTagURL.objects.all()
     tags_counts = all_tags.count()
     site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info.site_visit += 1
+    site_info.save()
     context = {
         "tags": all_tags,
         "tags_counts": tags_counts,
@@ -64,6 +78,8 @@ def get_list_by_tag(request, tag_url):
     blog_list = MDFile.objects.filter(md_tag=tag_name).exclude(md_draft=True).order_by("-md_pub_time")
     blog_counts = blog_list.count()
     site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info.site_visit += 1
+    site_info.save()
     context = {
         'blog_list': blog_list,
         'blog_counts': blog_counts,
@@ -80,6 +96,8 @@ def get_list_by_category(request, category_url):
     blog_list = MDFile.objects.filter(md_category=category_name).exclude(md_draft=True).order_by('-md_pub_time')
     blog_counts = blog_list.count()
     site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info.site_visit += 1
+    site_info.save()
     context = {
         'blog_list': blog_list,
         'blog_counts': blog_counts,
@@ -94,9 +112,13 @@ def get_list_by_category(request, category_url):
 def about_me(request):
     site_info = SiteInfo.objects.get(site_is_published=True)
     about_me_html = MarkdownRender(site_info.site_about_me).html
+    site_info.site_visit += 1
+    site_info.save()
     context = {
         "site_about_me": about_me_html,
         "site_title": site_info.site_title,
         "url_prefix": URL_PREFIX,
+        "site_visit": site_info.site_visit,
     }
+
     return render_to_response("about.html", context)

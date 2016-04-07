@@ -99,3 +99,8 @@ li.title:hover {
     width: 60%;
     margin: 5% 20% 5% 20%;
 }
+
+#sort-by {
+    text-align: right;
+    font-size: 12px;
+}

@@ -124,6 +124,10 @@ TEMPLATE_DIRS = (
 formats_en.DATETIME_FORMAT = 'Y-m-d H:m:s'
 
 
-
 # URL prefix for internet access
+# ex: if the website is served on 'http://www.example.com/blog/', then '/blog' is the prefix
 URL_PREFIX = ""
+
+
+# show "techblog" at navbar or not
+TECHBLOG_AT_NAVBAR = False

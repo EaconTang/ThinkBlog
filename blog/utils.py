@@ -2,7 +2,7 @@
 """
 """
 from django.shortcuts import HttpResponse, render_to_response
-import markdown2, markdown
+import markdown
 
 
 def html_response(*args, **kwargs):
@@ -38,3 +38,12 @@ def markdown_syntax():
     return """
     Markdown语法说明: http://www.jianshu.com/p/q81RER
     """
+
+
+def update_visit(site_info=None, add_count=1, sub_count=-1):
+    from .models import SiteInfo
+    if not site_info:
+        site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info.site_visit += add_count
+    site_info.site_visit -= sub_count
+    site_info.save()

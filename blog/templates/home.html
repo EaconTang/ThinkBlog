@@ -1,4 +1,5 @@
 {% load duoshuo_tags %}
+
 <html>
   <head>
 
@@ -38,7 +39,7 @@
 
                 <li><a href="{{ url_prefix }}/about/">关于</a></li>
                 <li style="opacity: 100%; color: black"><a href="{{ url_prefix }}/tag/">标签</a></li>
-                <li><a href="{{ url_prefix }}/category/techblog/">技术博客</a></li>
+{#                <li><a href="{{ url_prefix }}/category/techblog/">技术博客</a></li>#}
                 <li class="active"><a href="{{ url_prefix }}/">主页</a></li>
 
             </ul>
@@ -53,6 +54,9 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">所有博文({{ blog_counts }})</h3>
+{#                <div id="sort-by" style="text-align: right">#}
+{#                    发表时间|点击数#}
+{#                </div>#}
             </div>
             <ul class="list-group">
                 {%  for blog in blog_list %}
@@ -90,9 +94,9 @@
 
     </div>
 
-
+{##}
 {#    <footer id="for-footer">#}
-{#        <hr/>欢迎! 您是本站的第{{ site_visit }}位访客!<br>#}
+{#        <hr/>本站访问次数: {{ site_visit }}<br>#}
 {#        Designed by <a href="mailto:tyingk@163.com">Eacon</a>#}
 {#        |Inspired from <a target="_blank" href="http://www.yinwang.org">YinWang</a>#}
 {#        |Powered by <a href="https://www.djangoproject.com/">Django</a>#}

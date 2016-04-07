@@ -1,6 +1,8 @@
 # coding=utf-8
 from django.db import models
 from .utils import markdown_syntax
+from django import template
+from django.conf import settings
 
 
 class SiteInfo(models.Model):
@@ -119,3 +121,11 @@ class MDFileComment(models.Model):
 
     class Meta:
         verbose_name_plural = verbose_name = "评论"
+
+
+register = template.Library()
+
+
+@register.simple_tag
+def settings_value(key_name):
+    return getattr(settings, key_name, None)
