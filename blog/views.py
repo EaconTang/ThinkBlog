@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 from django.shortcuts import render_to_response
 from .utils import MDResponse, MarkdownRender
 from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL
-# from MyBlog.settings import URL_PREFIX
 from django import template
 from django.conf import settings
 
 URL_PREFIX = getattr(settings, "URL_PREFIX", "")
+# SITE_INFO = SiteInfo.objects.get(site_is_published=True)
 register = template.Library()
 
 
