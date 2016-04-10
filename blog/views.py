@@ -5,6 +5,8 @@ from .utils import MDResponse, MarkdownRender
 from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL
 from django import template
 from django.conf import settings
+from rest_framework import viewsets
+from .serializers import MDFileSerializer
 
 URL_PREFIX = getattr(settings, "URL_PREFIX", "")
 # SITE_INFO = SiteInfo.objects.get(site_is_published=True)
@@ -125,11 +127,19 @@ def about_me(request):
 
 
 def page_not_found(request):
-    context = {}
+    context = {
+        "url_prefix": URL_PREFIX,
+    }
     return render_to_response("404.html", context)
 
 
 def server_error(request):
-    context = {}
+    context = {
+        "url_prefix": URL_PREFIX,
+    }
     return render_to_response("500.html", context)
 
+
+class MDFileViewSet(viewsets.ModelViewSet):
+    queryset = MDFile.objects.all().exclude(md_draft=True).order_by('-md_pub_time')
+    serializer_class = MDFileSerializer

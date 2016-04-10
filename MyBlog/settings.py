@@ -46,6 +46,7 @@ INSTALLED_APPS = (
 
     'blog',
     'duoshuo',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -131,3 +132,13 @@ URL_PREFIX = ""
 
 # show "techblog" at navbar or not
 TECHBLOG_AT_NAVBAR = False
+
+
+# django-rest-fromework
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
