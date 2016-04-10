@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.conf.urls import include, url, handler404, handler500
 from django.contrib import admin
 
 urlpatterns = [
@@ -13,3 +13,7 @@ urlpatterns = [
 
     url(r'^(\S+)/$', 'blog.views.get_blog_by_url', name='get_blog_by_url'),
 ]
+
+
+handler404 = "blog.views.page_not_found"
+handler500 = "blog.views.server_error"

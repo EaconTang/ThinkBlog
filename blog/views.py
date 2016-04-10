@@ -122,3 +122,14 @@ def about_me(request):
     }
 
     return render_to_response("about.html", context)
+
+
+def page_not_found(request):
+    context = {}
+    return render_to_response("404.html", context)
+
+
+def server_error(request):
+    context = {}
+    return render_to_response("500.html", context)
+
