@@ -1,12 +1,13 @@
 # coding=utf-8
 from __future__ import unicode_literals
 from django.shortcuts import render_to_response
-from .utils import MDResponse, MarkdownRender
+from .utils import MarkdownResponse, MarkdownRender
 from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL
 from django import template
 from django.conf import settings
 from rest_framework import viewsets
 from .serializers import MDFileSerializer
+
 
 URL_PREFIX = getattr(settings, "URL_PREFIX", "")
 # SITE_INFO = SiteInfo.objects.get(site_is_published=True)
@@ -36,7 +37,7 @@ def home(request):
 
 def get_by_name(request, filename):
     md_text = MDFile.objects.get(md_filename=filename).md_text
-    return MDResponse(md_text=md_text)
+    return MarkdownResponse(md_text=md_text)
 
 
 def get_blog_by_url(request, url):

@@ -96,6 +96,8 @@ class MDFile(models.Model):
 
     class Meta:
         verbose_name_plural = verbose_name = "博客"
+        get_latest_by = "-md_pub_time"
+        ordering = ['-md_pub_time', ]
 
     @property
     def tags(self):
@@ -121,6 +123,15 @@ class MDFileComment(models.Model):
 
     class Meta:
         verbose_name_plural = verbose_name = "评论"
+        abstract = True
+
+
+class DuoshuoComment(MDFileComment):
+    pass
+
+
+class DisqusComment(MDFileComment):
+    pass
 
 
 register = template.Library()

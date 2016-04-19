@@ -4,7 +4,7 @@ from .models import MDFile, MDFileCategory, MDFileCategoryURL, MDFileTag, MDFile
 # Register your models here.
 admin.site.register(MDFileCategory)
 admin.site.register(MDFileCategoryURL)
-admin.site.register(MDFileComment)
+# admin.site.register(MDFileComment)
 
 
 class MDFileAdmin(admin.ModelAdmin):

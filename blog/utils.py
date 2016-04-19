@@ -13,7 +13,8 @@ def exist_html(filename):
     # To do
     return False
 
-class MDResponse(HttpResponse):
+
+class MarkdownResponse(HttpResponse):
     def __init__(self, md_text='', *args, **kwargs):
         super(HttpResponse, self).__init__(*args, **kwargs)
         self.content = MarkdownRender(md_text).html
@@ -21,7 +22,6 @@ class MDResponse(HttpResponse):
 
 class MarkdownRender(object):
     def __init__(self, text):
-        # self._html = markdown2.markdown(text)
         self._html = markdown.markdown(text)
 
     @property
