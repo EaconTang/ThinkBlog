@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+
+    <div class="row" style="padding-top: 70px">
+        <div class="container center-block">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">所有微博({{ weibo_counts }})</h3>
+
+                    </div>
+                    <ul class="list-group">
+                        {% for wb in weibo_list %}
+                            <li class="list-group-item title">
+                                <div>
+                                    <div id="each-weibo">
+                                        <br/>
+                                        <a href="{{ url_prefix }}/weibo/{{ wb.wb_object.wb_url }}/" title="猛戳本微博进行吐槽">
+                                            <font color="#121010" onmouseover="default">{{ wb.wb_html|safe }}</font>
+                                        </a>
+                                    </div>
+                                    <div class="each-blog-info">
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            发表于: {{ wb.wb_object.wb_pub_time | date:"Y-m-j H:i:s" }}
+                                        </div>
+                                        <br/><br/>
+
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                        <li class="list-group-item panel-pagination">
+                            <div class="col-md-4 col-sm-4" style="text-align: center">
+                                <a href="{{ url_prefix }}/weibo/?page={{ last_page_num }}">上一页</a>
+                            </div>
+                            <div class="col-md-4 col-sm-4" style="text-align: center;">
+                                {{ index_start }}-{{ index_end }}/{{ weibo_counts }}
+                            </div>
+                            <div class="col-md-4 col-sm-4" style="text-align: center">
+                                <a href="{{ url_prefix }}/weibo/?page={{ next_page_num }}">下一页</a>
+                            </div>
+                            <br>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+

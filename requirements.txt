@@ -1,3 +1,9 @@
-django
+django==1.9
 markdown
-duoshuo
+Pillow
+pygments
+pytz
+requests
+sitemap-generator
+gevent
+# duoshuo

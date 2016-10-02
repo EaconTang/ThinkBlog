@@ -1,0 +1,154 @@
+
+body {
+    font-family: STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
+    font-size: 18px;
+    background-attachment: local;
+    background-size: 100%;
+    /*background-position: left;*/
+}
+
+body html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+
+#nav-bar {
+    filter:alpha(opacity=20); /*ie透明度20%*/
+    -moz-opacity:0.8;        /*Moz + FF 透明度20%*/
+    opacity:0.8; /*支持CSS3的浏览器(FF1.5也支持)透明度20%*/
+
+}
+
+#nav-bar-content {
+
+}
+
+#main-body {
+    height: auto;
+    height: 90%;
+    position: relative;
+    filter:alpha(opacity=10); /*ie透明度20%*/
+    -moz-opacity:0.9;        /*Moz + FF 透明度20%*/
+    opacity:0.9; /*支持CSS3的浏览器(FF1.5也支持)透明度20%*/
+}
+
+#main-content {
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+#for-footer {
+    margin-top: -40px;
+    height: 30px;
+    clear: both;
+    position: relative;
+    text-align: center;
+    font-size: 15px;
+    color: gray;
+}
+
+.title a {
+    display: block;
+}
+
+.title {
+    cursor: pointer;
+}
+
+li.title:hover {
+    background-color: #eee;
+}
+
+.panel {
+    border-radius: 0;
+}
+
+.panel-default > .panel-heading {
+	background-image: none;
+	/*background-color: #fff;*/
+    text-align: center;
+    color: gray;
+}
+
+.panel-title {
+    font-size: 18px;
+}
+
+.panel-pagination {
+    color: gray;
+}
+
+.list-group-tags {
+}
+
+.navbar-default {
+	background-image: none;
+	background-color: #fff;
+    box-shadow: none;
+}
+
+.each-blog {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+    /*margin: auto;*/
+}
+
+#each-weibo {
+    font-family:"lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+
+.each-blog-title {
+    font-size: 50px;
+}
+
+.each-blog-info {
+    font-family: STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
+    font-size: 14px;
+    color: darkgray;
+}
+
+.duoshuo {
+    text-align: center;
+    width: 60%;
+    margin: 5% 20% 5% 20%;
+}
+
+#sort-by {
+    text-align: right;
+    font-size: 12px;
+}
+
+a:visited {
+    color: darkcyan;
+}
+
+a:link {
+    color: darkcyan;
+}
+
+a:hover {
+    text-decoration: double;
+}
+
+#each-weibo:link {
+    color: black;
+}
+
+img {
+    /*box-shadow: 0 0 10px #555;*/
+    /*border-radius: 6px;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*-webkit-box-shadow: 0 0 10px #555;*/
+    /*width: 100%;*/
+    max-width: 100%;
+}
+
+img.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -5,7 +5,6 @@ from django.db import models, migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('blog', '0004_auto_20160402_0352'),
     ]
@@ -48,7 +47,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mdfile',
             name='md_text',
-            field=models.TextField(help_text=b'\n    Markdown\xe8\xaf\xad\xe6\xb3\x95\xe8\xaf\xb4\xe6\x98\x8e: http://www.jianshu.com/p/q81RER\n    ', verbose_name=b'Text', blank=True),
+            field=models.TextField(
+                help_text=b'\n    Markdown\xe8\xaf\xad\xe6\xb3\x95\xe8\xaf\xb4\xe6\x98\x8e: http://www.jianshu.com/p/q81RER\n    ',
+                verbose_name=b'Text', blank=True),
         ),
         migrations.AlterField(
             model_name='mdfile',

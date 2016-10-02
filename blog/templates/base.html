@@ -1,0 +1,107 @@
+{% load staticfiles %}
+<html>
+
+{% block head %}
+
+    <head>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content="汤英康, Eacon, 博客, 技术博客, Python, 程序员, 软件开发"/>
+        <meta name="description" content="Eacon的个人博客"/>
+        <meta name="baidu-site-verification" content="P5TkNDuzLH" />
+
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+        <link href="{% static "css/base.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/pygments.css" %}" rel="stylesheet" type="text/css">
+        <!-- <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">-->
+        <link rel="shortcut icon" href="{% static "image/logo/eacon.jpg" %}">
+
+        {% block head_site_title %}
+            <title>{{ site_title }}</title>
+        {% endblock %}
+
+    </head>
+
+{% endblock %}
+
+
+{% block body_block %}
+
+    <body background="{% static "image/background/003.jpg" %}">
+{#    <body>#}
+    <div id="main-body">
+
+    <div id="main-content">
+
+    {% block body_nav %}
+
+        <nav class="navbar navbar-default navbar-fixed-top" id="nav-bar" role="navigation">
+            <div class="container-fluid" id="nav-bar-content">
+                {% block body_nav_brand %}
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        {% block block_site_title %}
+                            <a class="navbar-brand" href="#">{{ site_title }}</a>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="{{ url_prefix }}/">主页</a></li>
+                        <li><a href="{{ url_prefix }}/archive/">归档</a></li>
+                        <li style="opacity: 100%; color: black"><a href="{{ url_prefix }}/tag/">标签</a></li>
+                        <li><a href="{{ url_prefix }}/weibo/">微博</a></li>
+                        <li><a href="{{ url_prefix }}/about/">关于</a></li>
+                        <li><a href="{{ url_prefix }}/category/techblog/">技术博客</a></li>
+
+
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+    {% endblock %}
+
+
+    {% block body_content %}
+
+        {% block comments %}{% endblock %}
+
+    {% endblock %}
+
+{% endblock %}
+
+
+
+{% block footer %}{% endblock %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69161503-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+</html>

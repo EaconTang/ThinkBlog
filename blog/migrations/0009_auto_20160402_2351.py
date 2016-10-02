@@ -5,7 +5,6 @@ from django.db import models, migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('blog', '0008_auto_20160402_2334'),
     ]
@@ -34,6 +33,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='mdfile',
             name='md_category',
-            field=models.ManyToManyField(default=b'uncategorized', to='blog.MDFileCategory', null=True, verbose_name=b'Category'),
+            field=models.ManyToManyField(default=b'uncategorized', to='blog.MDFileCategory', null=True,
+                                         verbose_name=b'Category'),
         ),
     ]

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block head_site_title %}
+    <title>上传图片</title>
+{% endblock %}
+
+{% block body_nav_brand %}
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">上传图片</a>
+    </div>
+{% endblock %}
+
+{% block body_content %}
+    <br><br><br><br><br><br>
+
+    <div style="text-align: center" class="col-md-12">
+
+        <form enctype="multipart/form-data" method="POST" action="/upload/image/">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" value="上传文件">提交</button>
+        </form>
+
+        {% if result_success %}
+            <h3>{{ result_success }}</h3>
+        {% endif %}
+
+    </div>
+
+
+{% endblock %}

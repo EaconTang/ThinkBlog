@@ -5,7 +5,6 @@ from django.db import models, migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('blog', '0007_auto_20160402_2212'),
     ]
@@ -53,7 +52,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mdfile',
             name='md_category',
-            field=models.ForeignKey(default=b'uncategorized', verbose_name=b'Category', to='blog.MDFileCategory', null=True),
+            field=models.ForeignKey(default=b'uncategorized', verbose_name=b'Category', to='blog.MDFileCategory',
+                                    null=True),
         ),
         migrations.AlterField(
             model_name='mdfile',
@@ -63,7 +63,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mdfile',
             name='md_tag',
-            field=models.ManyToManyField(default=b'untagged', related_name='md_files_to_tags', verbose_name=b'Tags', to='blog.MDFileTag'),
+            field=models.ManyToManyField(default=b'untagged', related_name='md_files_to_tags', verbose_name=b'Tags',
+                                         to='blog.MDFileTag'),
         ),
         migrations.AddField(
             model_name='mdfiletagurl',

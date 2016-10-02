@@ -1,0 +1,329 @@
+
+<html>
+
+
+    <head>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+        <link href="/static/css/article.css" rel="stylesheet" type="text/css">
+        <link href="/static/css/pygments.css" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="/static/image/logo/eacon.jpg">
+        <script src="/static/js/doComments.js"></script>
+        <script src="blogCatalogue.js"></script>
+
+        <title>感受Python的编程特性</title>
+
+    </head>
+
+
+
+
+
+    <body>
+    <div align="center">
+
+        <div class="navbar-font">
+
+            
+
+                <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .8" role="navigation">
+
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            
+                                <a class="navbar-brand" href="#ds-comments" onclick="showComments()" title="猛戳这里狂喷本文"
+                                   id="tu-cao">吐槽本文</a>
+                            
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+
+                                <li><a href="/">主页</a></li>
+                                <li><a href="/archive/">归档</a></li>
+                                <li><a href="/tag/">标签</a></li>
+                                <li><a href="/weibo/">微博</a></li>
+                                <li><a href="/about/">关于</a></li>
+                                <li><a href="/category/techblog/">技术博客</a></li>
+
+
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+
+                </nav>
+            
+
+        </div>
+
+        
+            <div class="article-body" id="post_body">
+                <h2>感受Python的编程特性</h2>
+<p>讲讲Python中和其他语言不一样的特性，往往是这些特性使得Python与众不同，使得代码写起来更快更优雅。<br />
+这里总结的特性没有包括复杂的python黑魔法(或者说没有深入)，都是比较简单和易于理解的，适合python初学者阅读。</p>
+<h3>参数解包</h3>
+<p>可以用 * 和 ** 来解包一个列表或者字典，将数据作为参数传递：</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+
+<span class="n">arg_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">arg_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+<span class="n">foo</span><span class="p">(</span><span class="o">*</span><span class="n">arg_list</span><span class="p">)</span>          <span class="c1"># Out: 1 2</span>
+<span class="n">foo</span><span class="p">(</span><span class="o">**</span><span class="n">arg_dict</span><span class="p">)</span>         <span class="c1"># Out: 1 2</span>
+</pre></div>
+
+<h3>使用大括号{}</h3>
+<p>如果你忍受不了python的缩进风格，想念C语言风格的花括号，可以在文件开头引入braces模块： </p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">braces</span>
+</pre></div>
+
+<p><img alt="" src="/static/image/jgz01/41.gif" /><br />
+<strong>呵呵，逗你的...</strong>  </p>
+<h3>使用With语句来管理上下文</h3>
+<p>with语句是我最常使用的python语法之一，with可以返回上下文管理器(context manager)对象，并默认运行管理器的两个特殊方法<code>__enter__</code>和<code>__exit__</code>，分别在接下来语句执行前和执行后运行。<br />
+最经典的示例是在打开文件句柄时，它可以免除你读写文件后还要记得调用一次close()方法：</p>
+<div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;foo.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># 不需要再调用f.close()方法来关闭文件对象了</span>
+</pre></div>
+
+<h3>条件赋值语句</h3>
+<p>就是把if...else写在一行代码里...</p>
+<div class="highlight"><pre><span></span><span class="c1"># 比如一般的if else是这样的</span>
+<span class="k">if</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="s1">&#39;yes&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="s1">&#39;no&#39;</span>
+
+<span class="c1"># 写成一行的赋值语句</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="bp">True</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span>
+</pre></div>
+
+<h3>传递数据给生成器</h3>
+<p>生成器是python的一大特性，但很多人不知道迭代生成器时，可以通过generator.send(value)方法传递数据给它：</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gen</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">received_value</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span> <span class="n">a</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">received_value</span><span class="p">:</span>
+            <span class="c1"># 如果接受到数据， 用它替换a的值</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">received_value</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">gen</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>          <span class="c1"># Out: 1</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>          <span class="c1"># Out: 1</span>
+<span class="n">g</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>          <span class="c1"># Out: 2</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>          <span class="c1"># Out: 2</span>
+</pre></div>
+
+<h3>代码运行时动态地创建类</h3>
+<p>这是python动态语言的特点了，实际工程中肯定用的不多，但可以作为python-trick用在一些类似代码注入的场景。举个简单例子：</p>
+<div class="highlight"><pre><span></span><span class="c c-Singleline"># 比如运行前生成类是这样的话</span>
+<span class="k">class</span> <span class="n">MyType</span>(<span class="n">object</span>):
+    <span class="n">val</span> = <span class="s">&#39;my type&#39;</span>
+
+<span class="nb">print</span> <span class="n">MyType</span>().<span class="n">val</span>          <span class="c c-Singleline"># Out: my type</span>
+
+<span class="c c-Singleline"># 在运行期间可以这样创建类</span>
+<span class="n">MyType</span> = <span class="n">type</span>(<span class="s">&#39;MyType&#39;</span>, (<span class="n">object</span>,), {<span class="s">&#39;val&#39;</span>: <span class="s">&#39;my type&#39;</span>}
+<span class="nb">print</span> <span class="n">MyType</span>().<span class="n">val</span>          <span class="c c-Singleline"># Out: my type</span>
+</pre></div>
+
+<h3>格式化字符串替换功能</h3>
+<p>在python中，你可以用传统C语言风格的字符串替换，比如：</p>
+<div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">&#39;hello </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;world&#39;</span><span class="p">)</span>        <span class="c1"># Out: hello wolrd</span>
+</pre></div>
+
+<p>但使用字符串的format方法会更优雅，而且不用担心将非字符串类型传递导致出错：</p>
+<div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">&#39;hello {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;world&#39;</span><span class="p">)</span>
+</pre></div>
+
+<p>同时，这两种方法都可以使用命名替换，可以让你在替换多个值时不容易出错：</p>
+<div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">&#39;My </span><span class="si">%(info)s</span><span class="s1"> is </span><span class="si">%(value)i</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="p">({</span><span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">23</span><span class="p">})</span>
+<span class="k">print</span> <span class="s1">&#39;My {info} is {value}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info</span><span class="o">=</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">23</span><span class="p">)</span>
+<span class="c1"># Out: My age is 23.</span>
+</pre></div>
+
+<h3>列表切片特性</h3>
+<p>列表切片语法：<code>list[start: end: step]</code> ，可以截取可迭代对象的一部分内容(start到end-1， step是步长值)。<br />
+比如获取一个列表从索引1到3的部分：</p>
+<div class="highlight"><pre><span></span><span class="s s-Atom">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="s s-Atom">print</span> <span class="s s-Atom">l</span><span class="p">[</span><span class="mi">1</span><span class="s s-Atom">:</span> <span class="mi">4</span><span class="p">]</span>           <span class="s s-Atom">#</span> <span class="nv">Out</span><span class="s s-Atom">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="s s-Atom">print</span> <span class="s s-Atom">l</span><span class="p">[</span><span class="mi">0</span><span class="s s-Atom">:</span> <span class="mi">4</span><span class="s s-Atom">:</span> <span class="mi">2</span><span class="p">]</span>        <span class="s s-Atom">#</span> <span class="nv">Out</span><span class="s s-Atom">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="s s-Atom">print</span> <span class="s s-Atom">l</span><span class="p">[</span><span class="s s-Atom">::-</span><span class="mi">1</span><span class="p">]</span>           <span class="s s-Atom">#</span> <span class="nv">Out</span><span class="s s-Atom">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+<p>索引值为空时，截取到列表的开头或结尾， 步长值可以是负值，表示反向截取，上面的<code>l[::-1]</code>就是经典的反转列表的应用。 <br />
+同样地，可以用切片特性来删除列表的一段：</p>
+<div class="highlight"><pre><span></span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">print</span> <span class="n">l</span>             <span class="c1"># Out: [1, 4, 5]</span>
+</pre></div>
+
+<h3>利用元组特性快速交换变量</h3>
+<p>传统编程语言中，交换两个变量的值一般是这样：</p>
+<div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">b</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tmp</span>
+<span class="k">print</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>      <span class="c1"># Out: 2 1</span>
+</pre></div>
+
+<p>但是在python中，你可以这样：</p>
+<div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>
+</pre></div>
+
+<p>哈哈，是不是巨方便？因为在这里，python把它当作是两个元组之间的变换，即<code>(a, b) = (b, a)</code>。而且无论交换多少变量值都可以使用哦，比如：</p>
+<div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">4</span>
+ <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="p">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>
+ <span class="k">print</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">d</span>          <span class="c1"># Out: 4 3 2 1</span>
+</pre></div>
+
+<h3>使用生成器表达式</h3>
+<p>传统的for循环生成一个列表是这样的：</p>
+<div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">result</span>        <span class="c1"># Out: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;]</span>
+</pre></div>
+
+<p>如果使用表达式，只需要这一行代码：</p>
+<div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+
+<p>如果列表比较大，可以讲'[]'改为'()'，这样就会返回一个生成器：</p>
+<div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="c1"># 这里result是一个generator</span>
+</pre></div>
+
+<p>而且表达式里的for循环也是可以嵌套的，比如：</p>
+<div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
+<span class="k">print</span> <span class="n">result</span>        <span class="c1"># Out: [(1, 3), (1, 4), (2, 3), (2, 4)]</span>
+</pre></div>
+
+<h3>iter()传入可调用函数</h3>
+<p>iter(callable, sentinel)迭代函数，可以传入一个callable对象，它会重复地yield它的返回值，直到sentinel(哨兵)值为止</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_a_line</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">lamda</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+
+<h3>使用enumerate迭代</h3>
+<p>enumerate可迭代对象可以同时拿到(yield)索引和值，这在for循环中非常方便：</p>
+<div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">index</span><span class="p">,</span> <span class="n">item</span>
+<span class="c1"># Out: 0 a</span>
+<span class="c1"># Out: 1 b</span>
+<span class="c1"># Out: 2 c</span>
+
+<span class="c1"># 还可以传入第2个参数，指定索引起始值</span>
+<span class="k">print</span> <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>        <span class="c1"># Out: [(10,&#39;a&#39;),(11,&#39;b&#39;),(12,&#39;c&#39;)]</span>
+</pre></div>
+
+<h3>链式比较运算符</h3>
+<p>在python中，你可以在一个语句中连续使用比较运算符，非常方便。比如：</p>
+<div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">print</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">10</span>            <span class="c1"># Out: True</span>
+<span class="k">print</span> <span class="mi">6</span> <span class="o">&gt;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">10</span>            <span class="c1"># Out: True</span>
+<span class="k">print</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">==</span> <span class="n">a</span> <span class="o">-</span> <span class="mi">3</span>      <span class="c1"># Out: True</span>
+<span class="k">print</span> <span class="mi">5</span> <span class="o">==</span> <span class="n">a</span> <span class="o">!=</span> <span class="mi">6</span> <span class="o">==</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>      <span class="c1"># Out: True</span>
+</pre></div>
+
+<p>python会把它们拆开进行比较的，比如“1 &lt; a &lt; 10”会拆成“1 &lt; a”和“a &lt; 10”来比较。 </p>
+<h3>print使用"&gt;&gt;"重定向输出</h3>
+<p>类似于linux系统的重定向：</p>
+<div class="highlight"><pre><span></span><span class="k">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s2">&quot;Caught exception!!!&quot;</span>
+<span class="k">print</span> <span class="o">&gt;&gt;</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;foo.log&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="s1">&#39;exception info...&#39;</span>
+</pre></div>
+
+<h3>装饰器</h3>
+<p>装饰器语法以“@”开头，它可以包含被装饰的函数或类，并在函数运行前、运行中和运行后执行一些额外的操作，达到增强功能的作用。在代码中合理使用装饰器，把可复用的代码以优雅简明的方式进行使用，这也是python开发者一直所提倡的<strong>Pythonic</strong>风格！<br />
+装饰器是python的一大特性，详细展开的话可以另写一篇博客了，这里举最简单的示例：</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s1">&#39;start calling function... &#39;</span>
+        <span class="k">print</span> <span class="s1">&#39;args: &#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>     <span class="c1"># 这一行运行被装饰的原函数</span>
+        <span class="k">print</span> <span class="s1">&#39;finished!&#39;</span>
+        <span class="k">return</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@foo_wrapper</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="n">foo</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1"># Out: </span>
+<span class="c1"># start calling funtion...</span>
+<span class="c1"># args: [1, 2], {}</span>
+<span class="c1"># 3</span>
+<span class="c1"># finished!</span>
+</pre></div>
+
+<p>@foo_wrapper就是一个装饰器，它在foo函数运行前后都执行了一些额外的print操作，但没有影响原函数本身的运行。<br />
+装饰器经常可以被用在输出参数、日志、缓存、URL匹配视图等场景下。</p>
+            </div>
+
+            <div class="duoshuo-comment">
+                <div id="ds-comments" style="display: none">
+                    <!-- Duoshuo Comment BEGIN -->
+        <div class="ds-thread"></div>
+        <script type="text/javascript">
+        var duoshuoQuery = {short_name:"eacon"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+        <!-- Duoshuo Comment END -->
+                </div>
+
+            </div>
+
+            <footer id="for-footer">
+                <hr/>
+                本文访问次数: 24 | Copyright&copy; 2015-2016 tangyingkang.com
+                <br><br/>
+            </footer>
+
+        
+
+    </div>
+
+
+    </body>
+
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+
+</body>
+
+</html>

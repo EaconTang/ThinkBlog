@@ -1,105 +1,58 @@
-<html>
-  <head>
+{% extends "base.html" %}
 
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <link href="/static/css/home.css" rel="stylesheet" type="text/css">
-    <!-- <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">-->
-    <link rel="shortcut icon" href="/static/image/eacon.jpg">
-
-    <title>{{ site_title }}</title>
-
-  </head>
-  　　
-{#  <body background="/static/image/yuantu06.jpg">#}
-<body background="http://7xsqab.com2.z0.glb.clouddn.com/yuantu06.jpg">  <div id="main-body">
-  <div id="main-content">
-
-    <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">{{ site_title }}</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-
-                <li><a href="{{ url_prefix }}/about/">关于</a></li>
-                <li><a href="{{ url_prefix }}/tag/">标签</a></li>
-{#                <li class="active"><a href="{{ url_prefix }}/category/techblog/">技术博客</a></li>#}
-                <li><a href="{{ url_prefix }}/">主页</a></li>
-
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-    </nav>
+{% block body_content %}
 
     <div class="row" style="padding-top: 70px">
-      <div class="container center-block">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 col-sm-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">{{ category_name }}({{ blog_counts }})</h3>
-            </div>
-            <ul class="list-group">
-                {%  for blog in blog_list %}
-                  <li class="list-group-item title">
-                  <div>
-                    <div>
-                        <p class="each-blog">
-                            <p id="each-blog-title">
-                            <a href="{{ url_prefix }}/{{ blog.md_url }}/" title="{{ blog.md_summary }}">{{ blog.md_filename }}</a>
-                            </p>
-                        </p>
-                        <p class="each-blog-info">
-                            Date: {{ blog.md_pub_time | date }} | Visit: {{ blog.md_visit }} | Tags: {{ blog.tags }}
-                        </p>
-
+        <div class="container center-block">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ category_name }}({{ blog_counts }})</h3>
                     </div>
-                  </div>
+                    <ul class="list-group">
+                        {% for blog in blog_list %}
+                            <li class="list-group-item title">
+                                <div>
+                                    <div>
+                                        <p class="each-blog">
+                                        <p id="each-blog-title">
+                                            <a href="{{ url_prefix }}/post/{{ blog.md_url }}/"
+                                               title="{{ blog.md_summary }}">{{ blog.md_filename }}</a>
+                                        </p>
+                                        </p>
+                                        <p class="each-blog-info">
+                                            时间: {{ blog.md_pub_time | date:"Y-m-j" }} | 阅读: {{ blog.md_visit }} |
+                                            标签: {{ blog.tags }}
+                                        </p>
 
-                  </li>
-                {% endfor %}
+                                    </div>
+                                </div>
 
-            </ul>
-          </div>
+                            </li>
+                        {% endfor %}
+
+                        <li class="list-group-item panel-pagination">
+                            <div class="col-md-4 col-sm-4" style="text-align: center">
+                                <a href="{{ url_prefix }}/category/{{ category_url }}/?page={{ last_page_num }}">上一页</a>
+                            </div>
+                            <div class="col-md-4 col-sm-4" style="text-align: center;">
+                                {{ index_start }}-{{ index_end }}/{{ blog_counts }}
+                            </div>
+                            <div class="col-md-4 col-sm-4" style="text-align: center">
+                                <a href="{{ url_prefix }}/category/{{ category_url }}/?page={{ next_page_num }}">下一页</a>
+                            </div>
+                            <br>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+            </div>
         </div>
-
-        <div class="col-md-2">
-        </div>
-      </div>
     </div>
 
-  </div>
-  </div>
-
-{#      <footer id="for-footer">#}
-{#        <hr/>#}
-{#        欢迎! 您是本站的第{{ site_visit }}位访客!#}
-{#        <br>#}
-{#        Designed by <a href="mailto:tyingk@163.com">Eacon</a>#}
-{#        |Inspired from <a target="_blank" href="http://www.yinwang.org">YinWang</a>#}
-{#        |Powered by <a href="https://www.djangoproject.com/">Django</a>#}
-{#        |Hosted on <a href="https://www.aliyun.com/?&lang=en">AliCloud</a>#}
-{#        <br>#}
-{#        Copyright&copy; 2015-2016 tangyingkang.com#}
-{#        <br>#}
-{#    </footer>#}
-
-
-{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>#}
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-  </body>
-
-</html>
+{% endblock %}

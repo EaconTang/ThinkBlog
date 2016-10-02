@@ -2,12 +2,24 @@
     text-align: left;
     font-family:"lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-size: 18px;
-    margin: 5% 20% 5% 20%;
+    margin: 5% 0% 5% 0%;
     padding: 2% 5% 2% 5%;
-    width: 60%;
-    line-height: 150%;
+    /*width: 60%;*/
+    line-height: 180%;
+    /*width: 60%;*/
+    /*min-width: 600px;*/
     border: 2px solid LightGrey;
     /*background-color: #f2efea;*/
+}
+
+.article-body-weibo {
+    text-align: left;
+    font-family:"lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-size: 18px;
+    margin: 5% 20% 5% 20%;
+    padding: 2% 5% 2% 5%;
+    line-height: 150%;
+    border: 2px solid LightGrey;
 }
 
 .duoshuo-comment {
@@ -112,21 +124,23 @@ H4 {
 /*}*/
 
 
-/*img {*/
+img {
     /*box-shadow: 0 0 10px #555;*/
     /*border-radius: 6px;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
-    /*margin-top: 10px;*/
-    /*margin-bottom: 10px;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
     /*-webkit-box-shadow: 0 0 10px #555;*/
-/*}*/
+    /*width: 100%;*/
+    max-width: 100%;
+}
 
-/*img.displayed {*/
+img.displayed {
     /*display: block;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
-/*}*/
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /*hr {*/
     /*color: LightGrey;*/
@@ -136,4 +150,19 @@ H4 {
   /*color: #AA4433;*/
   /*font-size: 14px;*/
 /*}*/
+
+
+a:visited {
+    color: darkcyan;
+}
+
+a:link {
+    color: darkcyan;
+}
+
+.weibo-info {
+    font-family: STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
+    font-size: 14px;
+    color: darkgray;
+}
 

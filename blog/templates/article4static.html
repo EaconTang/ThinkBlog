@@ -1,0 +1,79 @@
+<html>
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link href="/static/css/article.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="/static/image/eacon.jpg">
+    <script src="/static/js/doComments.js"></script>
+
+    <title>{{ article_md_object.md_filename }}</title>
+
+</head>
+
+<body>
+<div align="center">
+
+    <div class="navbar-font">
+        <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .8" role="navigation">
+
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#ds-comments" onclick="showComments()" title="猛戳这里狂喷本文" id="tu-cao">吐槽本文</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ url_prefix }}/about/">关于</a></li>
+                        <li><a href="{{ url_prefix }}/tag/">标签</a></li>
+                        <li><a href="{{ url_prefix }}/">主页</a></li>
+
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+
+        </nav>
+
+    </div>
+
+    <div class="article-body">
+        {{ article_html|safe }}
+    </div>
+
+
+    <div class="duoshuo-comment">
+        <div id="ds-comments" style="display: none">
+            <!-- Duoshuo Comment BEGIN -->
+            <div class="ds-thread"></div>
+            <script type="text/javascript">
+                var duoshuoQuery = {short_name: "{{ short_name }}"};
+                (function () {
+                    var ds = document.createElement('script');
+                    ds.type = 'text/javascript';
+                    ds.async = true;
+                    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                    ds.charset = 'UTF-8';
+                    (document.getElementsByTagName('head')[0]
+                    || document.getElementsByTagName('body')[0]).appendChild(ds);
+                })();
+            </script>
+            <!-- Duoshuo Comment END -->
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

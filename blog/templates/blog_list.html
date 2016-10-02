@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+
+    <div class="row" style="padding-top: 70px">
+        <div class="container center-block">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">所有博客({{ blog_counts }})</h3>
+
+                    </div>
+                    <ul class="list-group">
+                        {% for blog in blog_list %}
+                            <li class="list-group-item title">
+                                <div>
+                                    <div>
+                                        <p class="each-blog">
+                                        <p id="each-blog-title">
+                                            <a href="{{ url_prefix }}/post/{{ blog.md_url }}/"
+                                               title="{{ blog.md_summary }}">{{ blog.md_filename }}</a>
+                                        </p>
+                                        </p>
+                                        <p class="each-blog-info">
+                                            时间: {{ blog.md_pub_time | date:"Y-m-j" }} | 阅读: {{ blog.md_visit }} |
+                                            标签: {{ blog.tags }}
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+
+                        <li class="list-group-item panel-pagination">
+                            <div class="col-md-4 col-sm-4" style="text-align: center">
+                                <a href="{{ url_prefix }}?page={{ last_page_num }}">上一页</a>
+                            </div>
+                            <div class="col-md-4 col-sm-4" style="text-align: center;">
+                                {{ index_start }}-{{ index_end }}/{{ blog_counts }}
+                            </div>
+                            <div class="col-md-4 col-sm-4" style="text-align: center">
+                                <a href="{{ url_prefix }}?page={{ next_page_num }}">下一页</a>
+                            </div>
+                            <br>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+

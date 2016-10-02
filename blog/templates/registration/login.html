@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+
+    <div class="row" style="padding-top: 70px">
+        <div class="container center-block">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">登录</h3>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item title">
+                            <div id="user-login" style="text-align: center">
+                                <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                                    {% csrf_token %}
+                                    用户名
+                                    <br/>
+                                    <input type="text" name="username">
+                                    <br>
+                                    密码
+                                    <br>
+                                    <input type="password" name="password">
+                                    <br>
+                                    <input type="submit" value="Submit">
+                                </form>
+                            </div>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

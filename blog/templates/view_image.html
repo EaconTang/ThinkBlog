@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block head_site_title %}
+    <title>查看图片</title>
+{% endblock %}
+
+{% block body_nav_brand %}
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">查看图片</a>
+    </div>
+{% endblock %}
+
+{% block body_content %}
+
+    <div class="row" style="padding-top: 70px">
+        <div class="container center-block">
+            <div class="col-md-6 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">目录[路径:{{ request_path }}]</h3>
+
+                    </div>
+                    <ul class="list-group">
+                        {% for image_dir in image_dir_list %}
+                            <li class="list-group-item title">
+                                <div>
+                                    <div id="each-weibo">
+                                        <br/>
+                                        <a href="{{ url_prefix }}/browse/{{ request_path }}/{{ image_dir }}/">
+                                            {{ image_dir }}
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">图片[路径:{{ request_path }}]</h3>
+
+                    </div>
+                    <ul class="list-group">
+                        {% for image_file in image_file_list %}
+                            <li class="list-group-item title">
+                                <div id="each-weibo">
+                                    <p>{{ image_file }}</p>
+                                    <img src="{% static "" %}{{ request_path }}/{{ image_file }}"
+                                         width="100px" height="80px">
+                                </div>
+
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+{% endblock %}
