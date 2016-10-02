@@ -1,6 +1,7 @@
 import pysitemap
 import os
 
+
 def main():
     sitemap_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sitemap.xml')
     crawler = pysitemap.Crawler(url='http://blog.tangyingkang.com/',
