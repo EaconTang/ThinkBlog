@@ -41,6 +41,7 @@ def get_backgroud_url():
         bg_url = str(url_obj.url_full_path)
         if not bg_url or not bg_url.startswith('http'):
             raise Exception('url error')
+        return bg_url
     except:
         return ""
 
