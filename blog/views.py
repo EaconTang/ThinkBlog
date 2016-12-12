@@ -36,8 +36,13 @@ def home(request):
 
 def get_backgroud_url():
     """"""
-    url_obj = BackgroundUrl.objects.get(url_is_published=True)
-    return str(url_obj.url_full_path)
+    try:
+        url_obj = BackgroundUrl.objects.get(url_is_published=True)
+        bg_url = str(url_obj.url_full_path)
+        if not bg_url or not bg_url.startswith('http'):
+            raise Exception('url error')
+    except:
+        return ""
 
 
 def get_archive(request, date_filter=None):
@@ -53,6 +58,7 @@ def get_archive(request, date_filter=None):
         context = {
             'time_counts': time_counts,
             'blog_list': blog_list,
+            'bg_url': get_backgroud_url(),
         }
     else:
         date_list = str(date_filter).rstrip('/').split('/')
@@ -70,6 +76,7 @@ def get_archive(request, date_filter=None):
             context = {
                 'time_counts': time_counts,
                 'blog_list': blog_list,
+                'bg_url': get_backgroud_url(),
             }
         elif len(date_list) == 2:
             # archive month
@@ -86,6 +93,7 @@ def get_archive(request, date_filter=None):
             context = {
                 'time_counts': time_counts,
                 'blog_list': blog_list,
+                'bg_url': get_backgroud_url(),
             }
         elif len(date_list) == 3:
             # archive day
@@ -96,6 +104,7 @@ def get_archive(request, date_filter=None):
             context = {
                 'archive_day': True,
                 'blog_list': blog_list,
+                'bg_url': get_backgroud_url(),
             }
         else:
             return HttpResponseNotFound(b"Not Found!")
@@ -173,6 +182,7 @@ def get_blog_by_url(request, url):
         'md_object': md_object,
         'site_title': site_info.site_title,
         "url_prefix": URL_PREFIX,
+        'bg_url': get_backgroud_url(),
     }
 
     if md_object.md_draft and not request.user.is_authenticated():
@@ -202,6 +212,7 @@ def get_tags(request):
         "techblog_tags_count": len(techblog_tags),
         "site_title": site_info.site_title,
         "url_prefix": URL_PREFIX,
+        'bg_url': get_backgroud_url(),
 
     }
     return render_to_response("tags.html", context)
@@ -236,6 +247,7 @@ def get_list_by_tag(request, tag_url):
         'next_page_num': next_page_num,
         'index_start': index_start,
         'index_end': index_end,
+        'bg_url': get_backgroud_url(),
     }
     return render_to_response("blogs_by_tag.html", context)
 
@@ -263,6 +275,7 @@ def get_list_by_category(request, category_url):
         'next_page_num': next_page_num,
         'index_start': index_start,
         'index_end': index_end,
+        'bg_url': get_backgroud_url(),
     }
     return render_to_response("blogs_by_category.html", context)
 
@@ -284,6 +297,7 @@ def about_me(request):
         "site_title": site_info.site_title,
         "url_prefix": URL_PREFIX,
         "site_visit": site_info.site_visit,
+        'bg_url': get_backgroud_url(),
     }
     return render_to_response("about.html", context)
 
@@ -312,6 +326,7 @@ def get_draft_blog_list(request):
         'blog_list': blog_list,
         'site_title': site_info.site_title,
         "url_prefix": URL_PREFIX,
+        'bg_url': get_backgroud_url(),
     }
     return render_to_response('draft_blog.html', context)
 
@@ -328,6 +343,7 @@ def page_not_found(request):
     """standard 404 error page"""
     context = {
         "url_prefix": URL_PREFIX,
+        'bg_url': get_backgroud_url(),
     }
     return render_to_response("404.html", context)
 
@@ -336,6 +352,7 @@ def server_error(request):
     """standard 500 error page"""
     context = {
         "url_prefix": URL_PREFIX,
+        'bg_url': get_backgroud_url(),
     }
     return render_to_response("500.html", context)
 
@@ -394,6 +411,7 @@ def get_weibo_list(request):
         'next_page_num': next_page_num,
         'index_start': index_start,
         'index_end': index_end,
+        'bg_url': get_backgroud_url(),
     }
     return render_to_response('weibo_list.html', context)
 
@@ -413,6 +431,7 @@ def get_weibo_by_url(request, url):
         'weibo_html': weibo_html,
         'site_title': site_info.site_title,
         'url_prefix': URL_PREFIX,
+        'bg_url': get_backgroud_url(),
     }
     if _weibo.wb_draft and not request.user.is_authenticated():
         return render_to_response("404.html", context)
@@ -461,7 +480,10 @@ def upload_image(request):
             return HttpResponse(b"Form is invalid!")
     else:
         form = UploadImageForm()
-        return render(request, 'upload_image.html', {'form': form})
+        return render(request, 'upload_image.html', {
+            'form': form,
+            'bg_url': get_backgroud_url(),
+        })
 
 
 def browse_file(request, path):
@@ -493,6 +515,7 @@ def view_image(request, path='image'):
         'image_file_list': image_file_list,
         'image_dir_list': image_dir_list,
         'url_prefix': URL_PREFIX,
+        'bg_url': get_backgroud_url(),
     }
     return render_to_response('view_image.html', context)
 
