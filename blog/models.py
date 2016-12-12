@@ -224,3 +224,15 @@ class ImageFile(models.Model):
 
     # ttl = models.DateTimeField(verbose_name='ImageTTL')
     is_exported = models.BooleanField(default=False)
+
+
+class BackgroundUrl(models.Model):
+    url_full_path = models.URLField(verbose_name='BackgroundURL')
+    url_name = models.CharField(verbose_name='URLName', max_length=128)
+    url_is_published = models.NullBooleanField(verbose_name="Published", default=False)
+
+    def __unicode__(self):
+        return self.url_name
+
+    class Meta:
+        verbose_name_plural = verbose_name = '背景图片'

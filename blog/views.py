@@ -9,7 +9,7 @@ from django.shortcuts import render
 
 from api.utils.export_image_files import mkdir_recursively
 from .forms import UploadImageForm
-from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL, Weibo
+from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL, Weibo, BackgroundUrl
 from .utils import *
 
 URL_PREFIX = getattr(settings, "URL_PREFIX", "")
@@ -32,6 +32,12 @@ WEIBO_EACH_PAGE = getattr(settings, "WEIBO_EACH_PAGE")
 
 def home(request):
     return get_blog_list(request)
+
+
+def get_backgroud_url():
+    """"""
+    url_obj = BackgroundUrl.objects.get(url_is_published=True)
+    return str(url_obj.url_full_path)
 
 
 def get_archive(request, date_filter=None):
@@ -125,6 +131,7 @@ def get_blog_list(request, page=1):
         'next_page_num': next_page_num,
         'index_start': index_start,
         'index_end': index_end,
+        'bg_url': get_backgroud_url(),
 
     }
     return render_to_response("blog_list.html", context)

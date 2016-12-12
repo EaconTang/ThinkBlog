@@ -80,3 +80,10 @@ admin.site.register(WeiboTag, WeiboTagAdmin)
 #
 #
 # admin.site.register(ImageFile, ImageFileAdmin)
+
+class BackgroundUrlAdmin(admin.ModelAdmin):
+    list_display = ('url_name', 'url_full_path', 'url_is_published')
+    list_per_page = 20
+
+
+admin.site.register(BackgroundUrl, BackgroundUrlAdmin)
