@@ -1,5 +1,6 @@
 {% extends "article.html" %}
 {% load duoshuo_tags %}
+{% load staticfiles %}
 
 <html>
 
@@ -53,6 +54,8 @@
 
         </div>
 
+        <div class="col-md-2"></div>
+        <div class="col-md-8 col-sm-12">
 
         {% block body_content %}
             <div class="article-body-weibo">
@@ -79,6 +82,9 @@
 
 
         {% endblock %}
+
+        </div>
+        <div class="col-md-2"></div>
 
     </div>
 
