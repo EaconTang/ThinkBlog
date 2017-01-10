@@ -6,4 +6,5 @@ pytz
 requests
 sitemap-generator
 gevent
+uwsgi
 # duoshuo
