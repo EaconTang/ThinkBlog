@@ -4,11 +4,38 @@
 
 <html>
 
-{% block head_site_title %}
+{% block head %}
+    <head>
 
-    <title>吐槽本微博</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content="汤英康, Eacon, 博客, 微博, 技术博客, Python, 程序员, 软件开发"/>
+        <meta name="description" content="Eacon的个人博客"/>
+        {% if md_object.md_keywords %}
+            <meta name="keywords" content="{{ md_object.md_keywords }}"/>
+        {% else %}
+            <meta name="keywords" content="{{ md_object.tags }}"/>
+        {% endif %}
 
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+        <link href="{% static "css/article.css" %}" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="{% static "image/logo/eacon.jpg" %}">
+        <script src="{% static "js/doComments.js" %}"></script>
+
+
+        {% block head_site_title %}
+
+            <title>吐槽本微博</title>
+
+        {% endblock %}
+
+    </head>
 {% endblock %}
+
+
 
 {% block body_block %}
 
@@ -71,14 +98,17 @@
                     <br/>
 
                 </div>
-            </div>
 
-            <div class="duoshuo-comment">
-                <div id="ds-comments">
-                    {% duoshuo_comments %}
+                <br>
+                <hr>
+
+                <div>
+                    <div id="ds-comments">
+                        {% duoshuo_comments %}
+                    </div>
                 </div>
-
             </div>
+
 
 
         {% endblock %}
