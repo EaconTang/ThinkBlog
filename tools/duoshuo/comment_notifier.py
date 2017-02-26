@@ -2,6 +2,7 @@
 """
 爬虫获取多说动态评论，并发出邮件通知
 """
+import sys
 import sqlite3
 import os
 import time
@@ -9,7 +10,9 @@ import hashlib
 import pprint
 import json
 import smtplib
+from email.mime.text import MIMEText
 import threading
+import logging
 
 import requests
 from requests.exceptions import RequestException
@@ -17,11 +20,21 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import WebDriverException, NoSuchElementException
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 DB_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
 HOME_URL = "http://blog.tangyingkang.com"
 PHANTOM_ADDR = "http://localhost:8910"
 JSON_PATH = os.path.join(os.path.dirname(__file__), "comment.json")
+
+logging.basicConfig(
+    filename=os.path.join(os.path.dirname(__file__), 'comment.log'),
+    level=logging.DEBUG,
+    format='[%(asctime)s] [%(name)s] [%(funcName)s] [%(lineno)d] %(levelname)s %(message)s'
+)
+LOG = logging.getLogger(__name__)
 
 
 def get_urls():
@@ -49,11 +62,21 @@ def get_urls():
     weibo_url_format = HOME_URL + "/weibo/{}/"
     URLS += [(weibo_url_format.format(url), title) for url, title in res_weibo]
 
-    print "URLs counts: {}".format(len(URLS))
+    LOG.info("URLs counts: {}".format(len(URLS)))
     return URLS
 
 
-def fetch_comments(url, title=None):
+def get_broswer():
+    """返回基于selenium+phantomJS的模拟浏览器"""
+    broswer = webdriver.Remote(
+        command_executor=PHANTOM_ADDR,
+        desired_capabilities=DesiredCapabilities.PHANTOMJS
+    )
+    LOG.info("Success on getting broswer...")
+    return broswer
+
+
+def fetch_comments(url, title=None, broswer=None):
     """
     获取评论
 
@@ -63,11 +86,9 @@ def fetch_comments(url, title=None):
     :param url:
     :return:
     """
-    broswer = webdriver.Remote(
-        command_executor=PHANTOM_ADDR,
-        desired_capabilities=DesiredCapabilities.PHANTOMJS
-    )
-    print "Fetching URL: {}".format(url)
+    if not broswer:
+        broswer = get_broswer()
+    LOG.info("Fetching URL: {}".format(url))
     for _ in range(3):  # 重试3次
         try:
             broswer.get(url)
@@ -75,18 +96,18 @@ def fetch_comments(url, title=None):
                 raise RequestException  # 网页出错
         except WebDriverException:
             if _ == 2:
-                print "Fail to fetch url: {}".format(url)
+                LOG.info("Fail to fetch url: {}".format(url))
                 return None
             else:
-                print "Cound not reach url({})! Wait 5 seconds and try again...".format(url)
+                LOG.info("Cound not reach url({})! Wait 5 seconds and try again...".format(url))
                 time.sleep(5)
                 continue
         except RequestException:
-            print "HTTP response code is not 200, ignoring URL: {}".format(url)
+            LOG.info("HTTP response code is not 200, ignoring URL: {}".format(url))
             return None
 
-    # 默认等待10秒使多说加载完毕
-    time.sleep(10)
+    # 默认等待几秒使多说加载完毕
+    time.sleep(5)
 
     for _ in range(3):
         try:
@@ -96,17 +117,16 @@ def fetch_comments(url, title=None):
         except NoSuchElementException:
             # 多说还未完全加载
             if _ == 2:
-                print "Give up this url: {}".format(url)
+                LOG.info("Give up this url: {}".format(url))
                 return None
             else:
-                print "Duoshuo is not loaded entirely! Wait 3 seconds and try again URL: {}".format(url)
+                LOG.info("Duoshuo is not loaded entirely! Wait 3 seconds and try again URL: {}".format(url))
                 time.sleep(3)
                 continue
 
     total_comments = int(str(total_comments).strip())
     if total_comments == 0:
-        print "No comments! URL: {}".format(url)
-        broswer.quit()
+        LOG.info("No comments! URL: {}".format(url))
         return {"url": url, "title": title, "count": 0, "top": 0, "detail": []}
 
     detail_list = []  # 评论详情列表
@@ -130,10 +150,27 @@ def fetch_comments(url, title=None):
             "content": _content.text
         })
 
-    broswer.quit()
     _ret = {"url": url, "title": title, "count": total_comments, "top": top, "detail": detail_list}
-
+    display_comment(_ret)
     return _ret
+
+
+def display_comment(comment):
+    """输出评论"""
+    url, title, count, detail = comment["url"], comment["title"], comment["count"], comment["detail"]
+    try:
+        _, columns = os.popen('stty size', 'r').read().split()
+    except:
+        columns = 20
+    msg = []
+    msg.append('*' * int(columns))
+    msg.append("URL: {}".format(url))
+    msg.append("Title: {}".format(title))
+    msg.append("Counts: {}".format(count))
+    msg.append("Detail: \n{}".format(
+        '\n====\n'.join(['User: {}\nContent: {}'.format(_["user"], _["content"]) for _ in detail])))
+    msg.append('*' * int(columns))
+    LOG.info('\n'.join(msg))
 
 
 def get_all_comments(urls):
@@ -141,10 +178,11 @@ def get_all_comments(urls):
     获取所有URL的评论情况
     返回：{url_md5: {}, ...}
     """
+    broswer = get_broswer()
     _url_comments = {}
     for url, title in urls:
         url_md5 = hashlib.new("md5", string=url).hexdigest()
-        _comment = fetch_comments(url, title)
+        _comment = fetch_comments(url, title, broswer)
         if _comment is not None:
             _url_comments[url_md5] = _comment
     return _url_comments
@@ -180,7 +218,7 @@ def get_all_comments_concurrently(urls):
         t.setDaemon(True)
         t.start()
     for t in threads:
-        t.join()
+        t.join(timeout=30)
     res_list = [t.result for t in threads]
 
     _url_comments = {}
@@ -192,13 +230,17 @@ def get_all_comments_concurrently(urls):
     return _url_comments
 
 
-def get_latest_comments():
+def get_latest_comments(asyn=False):
     """
     获取最新的评论情况
+    :param asyn: 是否多线程
     :return:
     """
     urls = get_urls()
-    comments_latest = get_all_comments_concurrently(urls)
+    if asyn:
+        comments_latest = get_all_comments_concurrently(urls)
+    else:
+        comments_latest = get_all_comments(urls)
     return comments_latest
 
 
@@ -231,7 +273,6 @@ def check_comments(_latest, _last):
     if notify_msg:
         return True, '\n'.join(notify_msg)
     else:
-
         return False, "No Change!"
 
 
@@ -242,13 +283,13 @@ def check_one(latest_comment, last_comment):
     """
     _url = latest_comment["url"]
     if last_comment is None:
-        print "New URL: {}!".format(_url)
+        LOG.info("New URL: {}!".format(_url))
         last_comment = {}
     if latest_comment["detail"] == last_comment.get("detail", []):
         return False, "No change for URL: {}!".format(_url)
-    print "Difference found for URL: {}! Last detail: {}; latest detail: {}".format(_url,
-                                                                                    last_comment.get("detail", []),
-                                                                                    latest_comment["detail"])
+    LOG.info("Difference found for URL: {}! Last detail: {}; latest detail: {}".format(_url,
+                                                                                       last_comment.get("detail", []),
+                                                                                       latest_comment["detail"]))
     if latest_comment["count"] > last_comment.get("count", 0):
         return True, 'New Comments! Click URL: {}'.format(_url)
     if latest_comment["count"] < last_comment.get("count", 0):
@@ -259,7 +300,7 @@ def check_one(latest_comment, last_comment):
 
 def update_comments(_latest, _last):
     """保存评论"""
-    print 'Update and Save comments to file: {}'.format(JSON_PATH)
+    LOG.info('Update and Save comments to file: {}'.format(JSON_PATH))
     if not _last:
         _origin = {}
     else:
@@ -271,25 +312,36 @@ def update_comments(_latest, _last):
 
 def send_notification(msg):
     """发送评论变更通知"""
-    print msg
+    sendmail(
+        smtp_host='smtp.163.com',
+        smtp_port=25,
+        sender='tyingk@163.com',
+        pwd=os.environ.get('MAIL_163_PWD'),
+        receiver='tyingk@163.com',
+        msg_subject='[Blog Comment Notification]',
+        msg_from='tyingk@163.com',
+        msg_to='tyingk@163.com',
+        msg_body=msg,
+    )
+    LOG.info("OK! Mail is sent!")
+    LOG.info(msg)
 
 
-def sendmail(mail_to):
+def sendmail(smtp_host, smtp_port, sender, pwd, receiver, msg_subject, msg_from, msg_to, msg_body):
     """
     发送邮件通知
     :param mail_to:
     :return:
     """
-    smtp = smtplib.SMTP("localhost", 25, local_hostname="eacon_aliyun")
-    res = smtp.sendmail(
-        from_addr='ds_notifier@eacon.ecs',
-        to_addrs=[mail_to],
-        msg="New comments!"
+    smtp = smtplib.SMTP(smtp_host, smtp_port)
+    smtp.login(user=sender, password=pwd)
+    msg = MIMEText('{}'.format(msg_body))
+    msg['subject'], msg['from'], msg['to'] = msg_subject, msg_from, msg_to
+    smtp.sendmail(
+        from_addr=sender,
+        to_addrs=receiver,
+        msg=msg.as_string()
     )
-    if not res:
-        print "OK!"
-    else:
-        print res
     smtp.close()
 
 
@@ -299,29 +351,23 @@ def pretty_print(str):
 
 def main():
     """"""
-    _last = get_last_comments()
-    _latest = get_latest_comments()
-    _notify, _msg = check_comments(_latest=_latest, _last=_last)
-    update_comments(_latest, _last)
-    if _notify:
-        send_notification(_msg)
-    else:
-        print _msg
+    try:
+        _last = get_last_comments()
+        if len(sys.argv) == 2 and sys.argv[1] == '--asyn':
+            asyn = True
+            LOG.info("Use multithreads...")
+        else:
+            asyn = False
+        _latest = get_latest_comments(asyn)
+        _notify, _msg = check_comments(_latest=_latest, _last=_last)
+        update_comments(_latest, _last)
+        if _notify:
+            send_notification(_msg)
+        else:
+            print _msg
+    except Exception as e:
+        LOG.error(e.message, exc_info=1)
 
 
 if __name__ == '__main__':
-    # print fetch_comments("http://blog.tangyingkang.com/post/2015/12/25/python-decorator/", 'python-decorator')
     main()
-    # def foo(bar):
-    #     return 'foo {}'.format(bar)
-    #
-    #
-    # ts = [MyThread(target=foo, args=(i,)) for i in range(3)]
-    # for t in ts:
-    #     t.start()
-    #
-    # for t in ts:
-    #     t.join()
-    #
-    # for t in ts:
-    #     print t.result

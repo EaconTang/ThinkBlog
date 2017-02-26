@@ -33,3 +33,6 @@
     +  uwsgi --ini uwsgi_blog.ini
 -  Nginx
     - 注意防蚊权限(数据库等)
+- docker-phantomJS
+    - ```docker run -d --name phantomJS -p 127.0.0.1:8910:8910 -v /etc/localtime:/etc/localtime wernight/phantomjs phantomjs --webdriver=8910```
+

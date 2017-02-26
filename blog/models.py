@@ -4,6 +4,7 @@ from django.db import models
 from .utils import markdown_syntax
 from datetime import datetime
 
+
 class SiteInfo(models.Model):
     """
     site info, mainly of: site title/site visit/about me page
