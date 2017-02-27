@@ -28,6 +28,7 @@ DB_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
 HOME_URL = "http://blog.tangyingkang.com"
 PHANTOM_ADDR = "http://localhost:8910"
 JSON_PATH = os.path.join(os.path.dirname(__file__), "comment.json")
+UNSENT_MSG = os.path.join(BASE_DIR, 'unsent_msg')
 
 logging.basicConfig(
     filename=os.path.join(os.path.dirname(__file__), 'comment.log'),
@@ -345,6 +346,25 @@ def sendmail(smtp_host, smtp_port, sender, pwd, receiver, msg_subject, msg_from,
     smtp.close()
 
 
+def save_unsent_msg(msg):
+    """邮件通知发送失败时，将消息保存起来"""
+    with open(UNSENT_MSG, 'w') as f:
+        f.write(msg)
+    LOG.info("Unsent message is saved into {}".format(UNSENT_MSG))
+
+
+def check_unsent_msg():
+    """检查是否有未发送消息，有的话，返回消息内容"""
+    try:
+        with open(UNSENT_MSG, 'r+') as f:
+            _msg = f.read().strip()
+    except IOError:
+        # IOError: [Errno 2] No such file or directory
+        _msg = None
+    LOG.info("Check unsent message: {}".format(_msg))
+    return _msg if _msg else None
+
+
 def pretty_print(str):
     pprint.PrettyPrinter(indent=2).pprint(str)
 
@@ -362,7 +382,14 @@ def main():
         _notify, _msg = check_comments(_latest=_latest, _last=_last)
         update_comments(_latest, _last)
         if _notify:
-            send_notification(_msg)
+            unsent_msg = check_unsent_msg()
+            if unsent_msg:
+                _msg += '\n====Unsent Message=====\n' + unsent_msg
+            try:
+                send_notification(_msg)
+            except Exception as e:
+                LOG.error("Fail on send mail! {}".format(e.message), exc_info=True)
+                save_unsent_msg(_msg)
         else:
             print _msg
     except Exception as e:
