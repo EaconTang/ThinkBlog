@@ -14,171 +14,44 @@
                             <div id="about-me">
                                 {{ site_about_me|safe }}
                             </div>
-
+                            {#                            <div>#}
+                            {#                                <div id="SOHUCS"></div>#}
+                            {#                                <script type="text/javascript">#}
+                            {#                                    (function () {#}
+                            {#                                        var appid = 'cysUs2V1U';#}
+                            {#                                        var conf = '0052d421f0ab05212f59aa8620ccf1b4';#}
+                            {#                                        var width = window.innerWidth || document.documentElement.clientWidth;#}
+                            {#                                        if (width < 960) {#}
+                            {#                                            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');#}
+                            {#                                        } else {#}
+                            {#                                            var loadJs = function (d, a) {#}
+                            {#                                                var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;#}
+                            {#                                                var b = document.createElement("script");#}
+                            {#                                                b.setAttribute("type", "text/javascript");#}
+                            {#                                                b.setAttribute("charset", "UTF-8");#}
+                            {#                                                b.setAttribute("src", d);#}
+                            {#                                                if (typeof a === "function") {#}
+                            {#                                                    if (window.attachEvent) {#}
+                            {#                                                        b.onreadystatechange = function () {#}
+                            {#                                                            var e = b.readyState;#}
+                            {#                                                            if (e === "loaded" || e === "complete") {#}
+                            {#                                                                b.onreadystatechange = null;#}
+                            {#                                                                a()#}
+                            {#                                                            }#}
+                            {#                                                        }#}
+                            {#                                                    } else {#}
+                            {#                                                        b.onload = a#}
+                            {#                                                    }#}
+                            {#                                                }#}
+                            {#                                                c.appendChild(b)#}
+                            {#                                            };#}
+                            {#                                            loadJs("http://changyan.sohu.com/upload/changyan.js", function () {#}
+                            {#                                                window.changyan.api.config({appid: appid, conf: conf})#}
+                            {#                                            });#}
+                            {#                                        }#}
+                            {#                                    })(); </script>#}
+                            {#                            </div>#}
                         </li>
-
-                        {% extends "article.html" %}
-                        {% load staticfiles %}
-
-                        <html>
-
-                        {% block head %}
-                            <head>
-
-                                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                                <meta name="viewport" content="width=device-width, initial-scale=1">
-                                <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-                                <meta name="keywords" content="汤英康, Eacon, 博客, 微博, 技术博客, Python, 程序员, 软件开发"/>
-                                <meta name="description" content="Eacon的个人博客"/>
-                                {% if md_object.md_keywords %}
-                                    <meta name="keywords" content="{{ md_object.md_keywords }}"/>
-                                {% else %}
-                                    <meta name="keywords" content="{{ md_object.tags }}"/>
-                                {% endif %}
-
-                                <link rel="stylesheet"
-                                      href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-                                <link rel="stylesheet"
-                                      href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-                                <link href="{% static "css/article.css" %}" rel="stylesheet" type="text/css">
-
-                                <link rel="shortcut icon" href="{% static "image/logo/eacon.jpg" %}">
-                                <script src="{% static "js/doComments.js" %}"></script>
-
-
-                                {% block head_site_title %}
-
-                                    <title>吐槽本微博</title>
-
-                                {% endblock %}
-
-                            </head>
-                        {% endblock %}
-
-
-
-                        {% block body_block %}
-
-                            <body>
-                            <div align="center">
-
-                                <div class="navbar-font">
-
-                                    {% block body_nav %}
-
-                                        <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .8"
-                                             role="navigation">
-
-                                            <div class="container-fluid">
-                                                <!-- Brand and toggle get grouped for better mobile display -->
-                                                <div class="navbar-header">
-                                                    <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                                            data-target="#bs-example-navbar-collapse-1">
-                                                        <span class="sr-only">Toggle navigation</span>
-                                                        <span class="icon-bar"></span>
-                                                        <span class="icon-bar"></span>
-                                                        <span class="icon-bar"></span>
-                                                    </button>
-                                                    <a class="navbar-brand" href="#ds-comments">吐槽本微博</a>
-                                                </div>
-
-                                                <!-- Collect the nav links, forms, and other content for toggling -->
-                                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                                    <ul class="nav navbar-nav navbar-right">
-
-                                                        <li><a href="{{ url_prefix }}/">主页</a></li>
-                                                        <li><a href="{{ url_prefix }}/archive/">归档</a></li>
-                                                        <li><a href="{{ url_prefix }}/tag/">标签</a></li>
-                                                        <li><a href="{{ url_prefix }}/weibo/">微博</a></li>
-                                                        <li><a href="{{ url_prefix }}/about/">关于</a></li>
-                                                        <li><a href="{{ url_prefix }}/category/techblog/">技术博客</a></li>
-
-                                                    </ul>
-                                                </div><!-- /.navbar-collapse -->
-                                            </div><!-- /.container-fluid -->
-
-                                        </nav>
-                                    {% endblock %}
-
-                                </div>
-
-                                <div class="col-md-2"></div>
-                                <div class="col-md-8 col-sm-12">
-
-                                    {% block body_content %}
-                                        <div class="article-body-weibo">
-                                            {{ weibo_html|safe }}
-
-                                            <div class="weibo-info">
-                                                <div class="col-md-4">
-                                                </div>
-                                                <div class="col-md-4"></div>
-                                                <div class="col-md-4">
-                                                    发表于: {{ wb_pub_time | date:"Y-m-j" }}
-                                                </div>
-                                                <br/>
-
-                                            </div>
-
-                                            <br>
-                                            <hr>
-
-                                            <div>
-                                                <div id="SOHUCS"></div>
-                                                <script type="text/javascript">
-                                                    (function () {
-                                                        var appid = 'cysUs2V1U';
-                                                        var conf = '0052d421f0ab05212f59aa8620ccf1b4';
-                                                        var width = window.innerWidth || document.documentElement.clientWidth;
-                                                        if (width < 960) {
-                                                            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
-                                                        } else {
-                                                            var loadJs = function (d, a) {
-                                                                var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
-                                                                var b = document.createElement("script");
-                                                                b.setAttribute("type", "text/javascript");
-                                                                b.setAttribute("charset", "UTF-8");
-                                                                b.setAttribute("src", d);
-                                                                if (typeof a === "function") {
-                                                                    if (window.attachEvent) {
-                                                                        b.onreadystatechange = function () {
-                                                                            var e = b.readyState;
-                                                                            if (e === "loaded" || e === "complete") {
-                                                                                b.onreadystatechange = null;
-                                                                                a()
-                                                                            }
-                                                                        }
-                                                                    } else {
-                                                                        b.onload = a
-                                                                    }
-                                                                }
-                                                                c.appendChild(b)
-                                                            };
-                                                            loadJs("http://changyan.sohu.com/upload/changyan.js", function () {
-                                                                window.changyan.api.config({appid: appid, conf: conf})
-                                                            });
-                                                        }
-                                                    })(); </script>
-                                            </div>
-
-
-                                        </div>
-
-
-
-                                    {% endblock %}
-
-                                </div>
-                                <div class="col-md-2"></div>
-
-                            </div>
-
-
-                            </body>
-
-                        {% endblock %}
-
-                        </html>
 
                     </ul>
                 </div>
