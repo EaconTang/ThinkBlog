@@ -7,7 +7,8 @@
     - 多分类、多标签建模
     - 增加微博实现
     - pygments代码高亮
-    - 集成多说评论
+    - ~~集成多说评论~~
+        - 多说评论要倒闭了，换搜狐畅言
     - 集成七牛cdn加速
     - 简单易用的文件管理界面，方便上传和加载静态资源
     - 自动定时备份
@@ -34,5 +35,5 @@
 -  Nginx
     - 注意防蚊权限(数据库等)
 - docker-phantomJS
-    - ```docker run -d --name phantomJS -p 127.0.0.1:8910:8910 -v /etc/localtime:/etc/localtime wernight/phantomjs phantomjs --webdriver=8910```
+    - ```docker run -d --name phantomJS -p 8910:8910 -v /etc/localtime:/etc/localtime wernight/phantomjs phantomjs --webdriver=8910```
 
