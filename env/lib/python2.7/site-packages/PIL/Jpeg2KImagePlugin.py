@@ -85,7 +85,7 @@ def _parse_jp2_header(fp):
     mode = None
     bpc = None
     nc = None
-    
+
     hio = io.BytesIO(header)
     while True:
         lbox, tbox = struct.unpack('>I4s', hio.read(8))
@@ -144,7 +144,7 @@ def _parse_jp2_header(fp):
 
     if size is None or mode is None:
         raise SyntaxError("Malformed jp2 header")
-    
+
     return (size, mode)
 
 ##
@@ -207,7 +207,7 @@ class Jpeg2KImageFile(ImageFile.ImageFile):
             t3 = (t[3][0], self.reduce, self.layers, t[3][3], t[3][4])
             self.tile = [(t[0], (0, 0) + self.size, t[2], t3)]
 
-        ImageFile.ImageFile.load(self)
+        return ImageFile.ImageFile.load(self)
 
 
 def _accept(prefix):

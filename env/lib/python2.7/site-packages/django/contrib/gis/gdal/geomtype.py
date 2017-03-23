@@ -3,7 +3,7 @@ from django.utils import six
 
 
 class OGRGeomType(object):
-    "Encapsulates OGR Geometry Types."
+    "Encapulates OGR Geometry Types."
 
     wkb25bit = -2147483648
 

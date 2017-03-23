@@ -1,4 +1,4 @@
-#!/Users/eacon/Study/_Python/MyBlog/env/bin/python
+#!/Users/eacon/github/MyBlog/env/bin/python
 from django.core import management
 
 if __name__ == "__main__":

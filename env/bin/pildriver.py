@@ -1,4 +1,4 @@
-#!/Users/eacon/Study/_Python/MyBlog/env/bin/python
+#!/Users/eacon/github/MyBlog/env/bin/python
 """PILdriver, an image-processing calculator using PIL.
 
 An instance of class PILDriver is essentially a software stack machine

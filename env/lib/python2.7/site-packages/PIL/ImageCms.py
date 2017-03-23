@@ -162,8 +162,11 @@ class ImageCmsProfile(object):
             self._set(core.profile_open(profile), profile)
         elif hasattr(profile, "read"):
             self._set(core.profile_frombytes(profile.read()))
+        elif isinstance(profile, _imagingcms.CmsProfile):
+            self._set(profile)
         else:
-            self._set(profile)  # assume it's already a profile
+            raise TypeError("Invalid type for Profile")
+        
 
     def _set(self, profile, filename=None):
         self.profile = profile
@@ -969,5 +972,3 @@ if __name__ == "__main__":
                 print(doc)
         except (AttributeError, TypeError):
             pass
-
-# End of file

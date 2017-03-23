@@ -54,6 +54,9 @@ class PyAccess(object):
         self.xsize = vals['xsize']
         self.ysize = vals['ysize']
 
+        # Keep pointer to im object to prevent dereferencing.
+        self._im = img.im
+
         # Debugging is polluting test traces, only useful here
         # when hacking on PyAccess
         # logger.debug("%s", vals)
@@ -314,5 +317,3 @@ def new(img, readonly=False):
         logger.debug("PyAccess Not Implemented: %s", img.mode)
         return None
     return access_type(img, readonly)
-
-# End of file
