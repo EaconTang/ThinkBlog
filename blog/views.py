@@ -33,7 +33,13 @@ WEIBO_EACH_PAGE = getattr(settings, "WEIBO_EACH_PAGE")
 
 
 def home(request):
-    return get_blog_list(request)
+    site_info = update_site_visit()
+    return render_to_response('home.html', context={
+        'site_visit': site_info.site_visit,
+        'site_title': site_info.site_title,
+        "url_prefix": URL_PREFIX,
+        'bg_url': get_backgroud_url(),
+    })
 
 
 def get_backgroud_url():
