@@ -29,6 +29,14 @@ class SiteInfoAdmin(admin.ModelAdmin):
 admin.site.register(SiteInfo, SiteInfoAdmin)
 
 
+class SiteVisitAdmin(admin.ModelAdmin):
+    list_display = ('time_visit', 'site_visit', 'day_visit', 'month_visit')
+    list_editable = ('site_visit',)
+
+
+admin.site.register(SiteVisit, SiteVisitAdmin)
+
+
 ##
 class MDFileTagAdmin(admin.ModelAdmin):
     list_display = ('md_tag_name', 'blogs_for_tag')

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+    <div class="row" style="padding-top: 70px">
+        <div class="container center-block">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 col-sm-12">
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                <div id="main" class="col-md-12" style="height:400px;width:800px"></div>
+
+                <!-- ECharts单文件引入 -->
+                <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+                <script>
+                    // 路径配置
+                    require.config({
+                        paths: {
+                            echarts: 'http://echarts.baidu.com/build/dist'
+                        }
+                    });
+                    // 使用
+                    require(
+                        [
+                            'echarts',
+                            'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+                        ],
+                        function (ec) {
+                            // 基于准备好的dom，初始化echarts图表
+                            var myChart = ec.init(document.getElementById('main'));
+
+                            var option = {
+                                tooltip: {
+                                    show: true
+                                },
+                                legend: {
+                                    data:['访问量']
+                                },
+                                xAxis : [
+                                    {
+                                        type : 'category',
+                                        data : [
+                                            {% for x in x_list %}
+                                                "{{ x }}",
+                                            {% endfor %}
+                                            // "2017-12-12","2017-12-13","2017-12-14","2017-12-15","2017-12-16","2017-12-17","2017-12-18"
+                                        ]
+                                    }
+                                ],
+                                yAxis : [
+                                    {
+                                        type : 'value',
+                                        axisLabel : {
+                                            formatter: '{value} '
+                                        }
+                                    }
+                                ],
+                                series : [
+                                    {
+                                        "name":"访问量",
+                                        "type":"line",
+                                        "data":[
+                                            {% for y in y_list %}
+                                                {{ y }},
+                                            {% endfor %}
+                                            // 5, 20, 40, 10, 10, 20, 100
+                                        ]
+                                    }
+                                ]
+                            };
+
+                            // 为echarts对象加载数据
+                            myChart.setOption(option);
+                        }
+                    );
+                </script>
+            </div>
+            <div class="col-md-2">
+            </div>
+
+        </div>
+        <div>
+            <div class="col-md-4 col-sm-4"></div>
+            <div class="col-md-4 col-sm-4">
+                <p style="text-align:center">
+                    <a href="/statistic/site-visit/?view=hour&recall=24">24时</a>
+                | <a href="/statistic/site-visit/?view=day&recall=30">30天</a>
+                | <a href="/statistic/site-visit/?view=month&recall=12">12月</a>
+                </p>
+
+                <br>
+                <br>
+
+            </div>
+            <div class="col-md-4 col-sm-4"></div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block footer %}
+    <footer id="for-footer">
+        <hr/>
+        Developed by <a href="http://www.tangyingkang.com">Eacon</a>
+        |Powered by <a href="https://www.djangoproject.com/">Django</a>
+        |Hosted on <a href="https://www.aliyun.com">Aliyun</a>
+        |CDN by <a href="http://www.qiniu.com/">Qiniu</a>
+        <br>
+        <a href="/statistic/site-visit/?view=day&recall=7">访问量统计</a>: {{ site_visit }}
+        | Copyright&copy; 2015-2018 <a href="http://www.tangyingkang.com">tangyingkang.com</a>
+        <br/>
+    </footer>
+{% endblock %}

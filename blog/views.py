@@ -2,14 +2,16 @@
 from __future__ import unicode_literals
 
 from collections import Counter
+from datetime import timedelta
 
 from django.contrib.sitemaps import Sitemap
 from django.http import *
 from django.shortcuts import render
+from django.core.exceptions import ObjectDoesNotExist
 
 from api.utils.export_image_files import mkdir_recursively
 from .forms import UploadImageForm
-from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL, Weibo, BackgroundUrl
+from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL, Weibo, BackgroundUrl, SiteVisit
 from .utils import *
 
 URL_PREFIX = getattr(settings, "URL_PREFIX", "")
@@ -577,3 +579,71 @@ def get_sitemap(request):
     with open(sitemap_file) as f:
         sitemap_xml = f.read()
     return HttpResponse(sitemap_xml)
+
+
+def get_site_visit(request):
+    """
+    :param request:
+    :return:
+    """
+    params = request.GET
+    recall = int(params.get('recall', 24))
+    view_type = params.get('view', 'hour')
+
+    if view_type == 'hour':
+        current_hour = datetime_hour_now()
+        recall_hours = reversed([current_hour - timedelta(hours=_) for _ in range(recall)])
+        hour_visit = []
+        for each_hour in recall_hours:
+            try:    # TODO: ORM查询有待优化
+                each_hour_obj = SiteVisit.objects.get(time_visit=each_hour)
+            except ObjectDoesNotExist:
+                each_hour_obj = SiteVisit()
+            hour_visit.append((each_hour, each_hour_obj.site_visit))
+        context = {
+            'x_list': [k.strftime('%Y-%m-%d %H') for k, v in hour_visit],
+            'y_list': [v for k, v in hour_visit]
+        }
+    if view_type == 'day':
+        current_date = datetime.now().date()
+        recall_dates = reversed([current_date - timedelta(days=_) for _ in range(recall)])
+        day_visit = []
+        for each_day in recall_dates:
+            try:
+                each_day_objs = SiteVisit.objects.filter(day_visit=each_day)
+                print each_day_objs
+            except ObjectDoesNotExist:
+                each_day_objs = []
+            day_visit.append((each_day, sum((obj.site_visit for obj in each_day_objs))))
+        context = {
+            'x_list': [k.strftime('%Y-%m-%d') for k, v in day_visit],
+            'y_list': [v for k, v in day_visit]
+        }
+    if view_type == 'month':
+        current_date = datetime.now().date()
+        year, month = map(int, current_date.strftime('%Y-%m').split('-'))
+        year_months = []
+        for _ in range(recall):
+            year_months.append([year, month])
+            month -= 1
+            if month <= 0:
+                year -= 1
+                month = 12
+        month_visit = []
+        for each_year, each_month in reversed(year_months):
+            _month_visit = '{Y}-{m}'.format(Y=each_year, m=each_month)
+            try:
+                each_month_objs = SiteVisit.objects.filter(month_visit=_month_visit)
+            except ObjectDoesNotExist:
+                each_month_objs = []
+            month_visit.append([_month_visit, sum((obj.site_visit for obj in each_month_objs))])
+        context = {
+            'x_list': [k for k, v in month_visit],
+            'y_list': [v for k, v in month_visit]
+        }
+    site_info = update_site_visit()
+    context.update({
+        "site_title": site_info.site_title,
+        "site_visit": site_info.site_visit,
+    })
+    return render_to_response('site_visit.html', context)

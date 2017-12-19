@@ -23,6 +23,22 @@ class SiteInfo(models.Model):
         verbose_name_plural = verbose_name = "网站信息"
 
 
+class SiteVisit(models.Model):
+    """
+    Site visitfor each hour
+    """
+    site_visit = models.IntegerField(verbose_name="Site Visits", default=0)
+    time_visit = models.DateTimeField(verbose_name="Visit Hour")
+    day_visit = models.DateField(verbose_name="Visit Date")
+    month_visit = models.CharField(verbose_name="Visit Month", max_length=32)
+
+    def __unicode__(self):
+        return str(self.site_visit)
+
+    class Meta:
+        verbose_name_plural = verbose_name = "网站访问统计"
+
+
 class MDFileCategory(models.Model):
     """
     category name
