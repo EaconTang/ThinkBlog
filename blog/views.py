@@ -5,14 +5,15 @@ from collections import Counter
 from datetime import timedelta
 
 from django.contrib.sitemaps import Sitemap
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import *
 from django.shortcuts import render
-from django.core.exceptions import ObjectDoesNotExist
 
 from api.utils.export_image_files import mkdir_recursively
 from .forms import UploadImageForm
 from .models import MDFile, SiteInfo, MDFileCategoryURL, MDFileTagURL, Weibo, BackgroundUrl, SiteVisit
 from .utils import *
+from .tasks import update_site_visit
 
 URL_PREFIX = getattr(settings, "URL_PREFIX", "")
 STATIC_ARTICLE_PAGE = getattr(settings, "STATIC_ARTICLE_PAGE", False)
@@ -33,7 +34,9 @@ WEIBO_EACH_PAGE = getattr(settings, "WEIBO_EACH_PAGE")
 
 
 def home(request):
-    site_info = update_site_visit()
+    # site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     return render_to_response('home.html', context={
         'site_visit': site_info.site_visit,
         'site_title': site_info.site_title,
@@ -117,7 +120,8 @@ def get_archive(request, date_filter=None):
             }
         else:
             return HttpResponseNotFound(b"Not Found!")
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     context.update({
         'url_prefix': URL_PREFIX,
         'site_title': site_info.site_title,
@@ -138,7 +142,8 @@ def get_blog_list(request, page=1):
     blog_counts = MDFile.objects.all().exclude(md_draft=True).count()
     (last_page_num, next_page_num), (index_start, index_end) = paginator(blog_counts, BLOG_EACH_PAGE, int(page))
     blog_list = MDFile.objects.filter(md_draft=False).order_by('-md_pub_time')[index_start - 1: index_end]
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     context = {
         'blog_counts': blog_counts,
         'blog_list': blog_list,
@@ -185,7 +190,8 @@ def get_blog_by_url(request, url):
     md_object.md_visit += 1
     md_object.save()
 
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     context = {
         'article_html': md_text_html,
         'md_object': md_object,
@@ -213,7 +219,8 @@ def get_tags(request):
     techblog_tags = [t for t in techblog_tags if t.blogs_for_tagURL]
     not_techblog_tags = all_tags.exclude(md_tag_name__mdfile__md_category=techblog_category_name)
     not_techblog_tags = [t for t in not_techblog_tags if t.blogs_for_tagURL]
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     context = {
         "tags": not_techblog_tags,
         "tags_count": len(not_techblog_tags),
@@ -243,7 +250,8 @@ def get_list_by_tag(request, tag_url):
     (last_page_num, next_page_num), (index_start, index_end) = paginator(blog_counts, BLOG_EACH_PAGE, page)
     blog_list = MDFile.objects.filter(md_tag=tag_name).exclude(md_draft=True).order_by("-md_pub_time")[
                 index_start - 1: index_end]
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     context = {
         'blog_counts': blog_counts,
         'blog_list': blog_list,
@@ -271,7 +279,8 @@ def get_list_by_category(request, category_url):
     (last_page_num, next_page_num), (index_start, index_end) = paginator(blog_counts, BLOG_EACH_PAGE, page)
     blog_list = MDFile.objects.filter(md_category=category_name).exclude(md_draft=True).order_by('-md_pub_time')[
                 index_start - 1 if index_start != 0 else index_start: index_end]
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     context = {
         'blog_counts': blog_counts,
         'blog_list': blog_list,
@@ -299,7 +308,8 @@ def about_me(request):
     # if ok:
     #     return HttpResponse(b"{}".format(html))
 
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     about_me_html = MarkdownRender(site_info.site_about_me).html
     context = {
         "site_about_me": about_me_html,
@@ -410,7 +420,8 @@ def get_weibo_list(request):
         }
         weibo_list.append(_d)
 
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     context = {
         'weibo_list': weibo_list,
         'weibo_counts': weibo_counts,
@@ -434,7 +445,8 @@ def get_weibo_by_url(request, url):
     """
     _weibo = Weibo.objects.get(wb_url=url)
     weibo_html = MarkdownRender(_weibo.wb_text).html
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     context = {
         'wb_pub_time': _weibo.wb_pub_time,
         'weibo_html': weibo_html,
@@ -647,7 +659,8 @@ def get_site_visit(request):
             'x_list': [k for k, v in month_visit],
             'y_list': [v for k, v in month_visit]
         }
-    site_info = update_site_visit()
+    site_info = SiteInfo.objects.get(site_is_published=True)
+    update_site_visit.delay()
     context.update({
         "site_title": site_info.site_title,
         "site_visit": site_info.site_visit,
