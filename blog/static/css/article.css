@@ -13,13 +13,13 @@
 }
 
 .article-body-weibo {
-    text-align: left;
+    text-align: center;
     font-family:"lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-size: 18px;
-    margin: 10% 0% 5% 0%;
-    padding: 2% 5% 2% 5%;
+    margin: 30% 0% 30% 0%;
+    /*padding: 2% 5% 2% 5%;*/
     line-height: 150%;
-    border: 2px solid LightGrey;
+    /*border: 2px solid LightGrey;*/
 }
 
 .duoshuo-comment {
@@ -165,4 +165,3 @@ a:link {
     font-size: 14px;
     color: darkgray;
 }
-
