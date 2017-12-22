@@ -46,23 +46,27 @@
 
         <div class="col-md-8 col-sm-12">
             {% block body_content %}
-            <div class="container" style="display: table">
-              <div class="row" style="display: table-cell;vertical-align: center">
+            <div>
+                    <br>
+                    <br>
+                    <br>
 
                 <div class="article-body-weibo">
                     {{ weibo_html|safe }}
 
                     <br>
+                    <br>
+
+                    <hr>
 
                     <div class="weibo-info">
 
                         <div class="col-md-4"></div>
                         <div class="col-md-4" style="text-align: center">
-                            {{ wb_pub_time | date:"Y-m-j" }}
+                            Eacon@{{ wb_pub_time | date:"Y-m-j" }}
                         </div>
                         <div class="col-md-4">
                         </div>
-                        <br/>
 
                     </div>
 
@@ -71,14 +75,8 @@
                 </div>
 
 
-                <footer id="for-footer">
-                    <hr/>
-                    <a href="/">回到首页</a>
-                    <br/><br>
-                </footer>
 
 
-              </div>
             </div>
 
 
