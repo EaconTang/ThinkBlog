@@ -10,4 +10,5 @@ uwsgi
 # celery-with-redis
 celery==4.0
 redis
+supervisor
 # duoshuo

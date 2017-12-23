@@ -15,6 +15,7 @@
         - ~~基于PhantomJS(Docker)爬取动态js实现自定义的评论信息检测，并通过邮件通知~~
     - ECharts访问统计图表
     - 基于Celery实现后台任务队列
+    - 使用uwsgi+supervisord启动和管理进程
 
 
 ## 部署手记
@@ -29,7 +30,7 @@
     - ALLOWED_HOSTS
     - STATIC_URL
         - 服务器本地: /static/
-        - 七牛
+        - 七牛：替换七牛cdn
     - URL_PREFIX
     - BLOG_EACH_PAGE
 -  uWSGI
@@ -38,4 +39,12 @@
     - 注意防蚊权限(数据库等)
 - docker-phantomJS
     - ```docker run -d --name phantomJS -p 8910:8910 -v /etc/localtime:/etc/localtime wernight/phantomjs phantomjs --webdriver=8910```
+- 启动Reids
+    - ```docker run -d --name redis --restart=always -p 6379:6379 redis```
+- 启动Celery Worker
+    - ```celery worker -A MyBlog --loglevel info --logfile /data/logs/celery_worker.log```
+- 使用supervisord启动
+    - ```echo_supervisord_conf > /etc/supervisord.conf```
+    - ```cat MyBlog/supervisord.conf >> /etc/supervisord.conf```
+    - ```supervisord -c /etc/supervisord.conf```
 
