@@ -1,21 +1,20 @@
-# MyBlog
+# ThinkBlog
 
-## 基于Django的个人博客
-- 实现了博客网站的各种常用功能
-    - markdown语法编写博客
-    - 博客归档
-    - 多分类、多标签建模
-    - 增加微博实现
-    - pygments代码高亮
-    - 简单易用的文件管理界面，方便上传和加载静态资源
-    - 自动定时备份
-    - 集成七牛cdn加速
-    - ~~集成多说评论~~
-        - 多说评论要倒闭了，换搜狐畅言
-        - ~~基于PhantomJS(Docker)爬取动态js实现自定义的评论信息检测，并通过邮件通知~~
-    - ECharts访问统计图表
-    - 基于Celery实现后台任务队列
-    - 使用uwsgi+supervisord启动和管理进程
+ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的各种常用功能：
+- markdown语法编写博客
+- 博客归档
+- 多分类、多标签建模
+- 增加微博实现
+- pygments代码高亮
+- 简单易用的文件管理界面，方便上传和加载静态资源
+- 自动定时备份
+- 集成七牛cdn加速
+- ~~集成多说评论~~
+    - ~~基于PhantomJS(Docker)爬取动态js实现自定义的评论信息检测，并通过邮件通知~~
+    - 多说评论要倒闭了，换搜狐畅言
+- ECharts访问统计图表
+- 基于Celery实现后台任务队列
+- 使用uwsgi+supervisord启动和管理进程
 
 
 ## 部署手记
@@ -47,4 +46,3 @@
     - ```echo_supervisord_conf > /etc/supervisord.conf```
     - ```cat MyBlog/supervisord.conf >> /etc/supervisord.conf```
     - ```supervisord -c /etc/supervisord.conf```
-
