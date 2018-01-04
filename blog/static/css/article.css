@@ -165,3 +165,14 @@ a:link {
     font-size: 14px;
     color: darkgray;
 }
+
+table, th, td {
+    border:1px solid gray;
+}
+th {
+    padding: 5px 10px 5px 10px;
+}
+td {
+
+    padding: 5px 10px 5px 10px;
+}
