@@ -12,3 +12,4 @@ celery==4.0
 redis
 supervisor
 # duoshuo
+mistune

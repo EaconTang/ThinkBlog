@@ -10,6 +10,7 @@ from datetime import datetime
 from functools import wraps
 
 import markdown
+import mistune
 import requests
 from django.conf import settings
 from django.shortcuts import HttpResponse, render_to_response, Http404
@@ -41,7 +42,8 @@ class MarkdownRender(object):
     """
 
     def __init__(self, text):
-        self._html = markdown.markdown(text)
+        # self._html = markdown.markdown(text)
+        self._html = mistune.markdown(text)
         if '<pre><code>' in self._html:
             self._html = CodeHighlighter(self._html).html
 
