@@ -1,5 +1,7 @@
 # ThinkBlog
 
+[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)]()
+
 ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的各种常用功能：
 - markdown语法编写博客
 - 博客归档
