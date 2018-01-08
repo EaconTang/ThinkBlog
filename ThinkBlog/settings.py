@@ -27,11 +27,8 @@ SECRET_KEY = '5@mw^m6i-hz=yo3u&4+65r$&!ke^2upp@tvu&t*q^_mfc1pbm-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["blog.tangyingkang.com", "localhost"]
+ALLOWED_HOSTS = ["*"]
 
-#
-DUOSHUO_SECRET = "74cd6131489314687b1433fceb9aa985"
-DUOSHUO_SHORT_NAME = "eacon"
 
 # Application definition
 

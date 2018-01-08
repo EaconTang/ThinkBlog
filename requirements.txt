@@ -5,11 +5,8 @@ pygments
 pytz
 requests
 sitemap-generator
-gevent
 uwsgi
-# celery-with-redis
 celery==4.0
 redis
 supervisor
-# duoshuo
 mistune

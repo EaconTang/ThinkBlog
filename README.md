@@ -24,6 +24,7 @@ ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的�
     + python manage.py makemigrations
     + python manage.py migrate
 - collectstatic收集静态文件
+    + python manage.py collectstatic
 - Settings文件设置:
     - DEBUG=False
     - ALLOWED_HOSTS
@@ -36,13 +37,19 @@ ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的�
     +  uwsgi --ini uwsgi_blog.ini
 -  Nginx
     - 注意防蚊权限(数据库等)
-- docker-phantomJS
-    - ```docker run -d --name phantomJS -p 8910:8910 -v /etc/localtime:/etc/localtime wernight/phantomjs phantomjs --webdriver=8910```
+- ~~docker-phantomJS~~
+    - ~~ ```docker run -d --name phantomJS -p 8910:8910 -v /etc/localtime:/etc/localtime wernight/phantomjs phantomjs --webdriver=8910``` ~~
 - 启动Reids
     - ```docker run -d --name redis --restart=always -p 6379:6379 redis```
 - 启动Celery Worker
-    - ```celery worker -A ThinkBlog --loglevel info --logfile /data/logs/celery_worker.log```
+    - ```celery worker -A ThinkBlog --loglevel info --logfile /opt/ThinkBlog/logs/celery_worker.log```
 - 使用supervisord启动
     - ```echo_supervisord_conf > /etc/supervisord.conf```
     - ```cat ThinkBlog/supervisord.conf >> /etc/supervisord.conf```
     - ```supervisord -c /etc/supervisord.conf```
+
+
+## 依赖
+- 数据库：
+    - sqlite3
+    - redis
