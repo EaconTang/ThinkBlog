@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('image_file', models.ImageField(upload_to=b'', verbose_name=b'ImageFile')),
                 ('image_name', models.CharField(max_length=32, verbose_name=b'ImageName')),
                 ('image_path',
-                 models.FilePathField(allow_folders=True, path=b'/Users/eacon/Study/_Python/MyBlog/static/image',
+                 models.FilePathField(allow_folders=True, path=b'/Users/eacon/Study/_Python/ThinkBlog/static/image',
                                       recursive=True)),
                 ('is_exported', models.BooleanField(default=False)),
             ],

@@ -1,5 +1,5 @@
 """
-WSGI config for MyBlog project.
+WSGI config for ThinkBlog project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -14,6 +14,6 @@ from django.core.wsgi import get_wsgi_application
 
 base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, base_path)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MyBlog.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ThinkBlog.settings")
 
 application = get_wsgi_application()

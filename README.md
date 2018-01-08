@@ -41,8 +41,8 @@ ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的�
 - 启动Reids
     - ```docker run -d --name redis --restart=always -p 6379:6379 redis```
 - 启动Celery Worker
-    - ```celery worker -A MyBlog --loglevel info --logfile /data/logs/celery_worker.log```
+    - ```celery worker -A ThinkBlog --loglevel info --logfile /data/logs/celery_worker.log```
 - 使用supervisord启动
     - ```echo_supervisord_conf > /etc/supervisord.conf```
-    - ```cat MyBlog/supervisord.conf >> /etc/supervisord.conf```
+    - ```cat ThinkBlog/supervisord.conf >> /etc/supervisord.conf```
     - ```supervisord -c /etc/supervisord.conf```

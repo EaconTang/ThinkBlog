@@ -4,7 +4,7 @@ import os
 from celery import Celery
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MyBlog.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ThinkBlog.settings")
 
 # Celery Settings
 CELERY_BROKER = 'redis://localhost:6379/0'
@@ -13,7 +13,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TIMEZONE = 'Asia/Shanghai'
 
-app = Celery('MyBlog',
+app = Celery('ThinkBlog',
              broker=CELERY_BROKER,
              backend=CELERY_BACKEND
              )

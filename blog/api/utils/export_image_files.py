@@ -35,4 +35,4 @@ def mkdir_recursively(dir_path):
 
 if __name__ == '__main__':
     # main()
-    mkdir_recursively('/Users/eacon/Study/_Python/MyBlog/static/test1/jimi/jimi1/jimi2/jimi3')
+    mkdir_recursively('/Users/eacon/Study/_Python/ThinkBlog/static/test1/jimi/jimi1/jimi2/jimi3')
