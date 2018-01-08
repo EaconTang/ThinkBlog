@@ -25,7 +25,10 @@ ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的�
 ```docker exec -it think_blog python manage.py createsuperuser```
 
 3. 本地浏览器访问：   
-```http://localhost:8000```
+```
+后台管理：http://localhost:8000/admin/
+博客首页：http://localhost:8000/
+```
 
 
 
@@ -57,7 +60,7 @@ ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的�
     - ```celery worker -A ThinkBlog --loglevel info --logfile /opt/ThinkBlog/logs/celery_worker.log```
 - 使用supervisord启动
     - ```echo_supervisord_conf > /etc/supervisord.conf```
-    - ```cat ThinkBlog/supervisord.conf >> /etc/supervisord.conf```
+    - ```cat supervisord.conf >> /etc/supervisord.conf```
     - ```supervisord -c /etc/supervisord.conf```
 
 
