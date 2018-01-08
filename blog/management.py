@@ -7,7 +7,6 @@ from blog.models import *
 
 def init_db(sender, **kwargs):
     if sender.name == 'blog':
-        print dir(sender)
         if not SiteInfo.objects.exists():
             SiteInfo.objects.create(
                 site_version='0.0',
@@ -18,6 +17,17 @@ def init_db(sender, **kwargs):
                 site_is_published=True
             )
             print "Init model: SiteInfo..."
+        if not MDFileCategory.objects.exists():
+            MDFileCategory.objects.create(
+                md_category_name='技术博客'
+            )
+            print "Init model: MDFileCategory..."
+        if not MDFileCategoryURL.objects.exists():
+            MDFileCategoryURL.objects.create(
+                md_category_url='techblog',
+                md_category_name=MDFileCategory.objects.get(md_category_name='技术博客')
+            )
+            print "Init model: MDFileCategoryURL..."
 
 
 post_migrate.connect(init_db)
