@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin
+from blog.admin import my_admin_site
 
 # from rest_framework import routers
 
@@ -11,7 +12,8 @@ urlpatterns = [
     # url(r'^$', include('blog.urls')),
 
     # admin
-    url(r'^admin/', include(admin.site.urls)),
+    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', my_admin_site.urls),
 
     # blog post
     url(r'^post/(\S+)/$', 'blog.views.get_blog_by_url', name='get_blog_by_url'),
