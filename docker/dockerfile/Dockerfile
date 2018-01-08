@@ -25,8 +25,9 @@ RUN python manage.py makemigrations && \
     python manage.py collectstatic
 
 
+COPY run.sh /usr/local/bin/run
+RUN chmod +x /usr/local/bin/run
+
 EXPOSE 8000 6379
 
-COPY cmd.sh /opt/cmd.sh
-
-CMD ["sh", "/opt/cmd.sh"]
+CMD ["run"]
