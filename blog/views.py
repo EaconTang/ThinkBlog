@@ -32,10 +32,23 @@ WEIBO_EACH_PAGE = getattr(settings, "WEIBO_EACH_PAGE")
 # def settings_value(key_name):
 #     return getattr(settings, key_name, None)
 
+def get_site_info():
+    try:
+        site_info = SiteInfo.objects.get(site_is_published=True)
+    except ObjectDoesNotExist:
+        site_info = SiteInfo(
+            site_version='0.0',
+            site_title='ThinkBlog',
+            site_visit=0,
+            site_copyright='Developed by <a href="http://www.tangyingkang.com">Eacon</a>|Powered by <a href="https://www.djangoproject.com/">Django</a>',
+            site_about_me='About me.',
+            site_is_published=True
+        )
+    return site_info
+
 
 def home(request):
-    # site_info = update_site_visit()
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     return render_to_response('home.html', context={
         'site_visit': site_info.site_visit,
@@ -120,7 +133,7 @@ def get_archive(request, date_filter=None):
             }
         else:
             return HttpResponseNotFound(b"Not Found!")
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     context.update({
         'url_prefix': URL_PREFIX,
@@ -142,7 +155,7 @@ def get_blog_list(request, page=1):
     blog_counts = MDFile.objects.all().exclude(md_draft=True).count()
     (last_page_num, next_page_num), (index_start, index_end) = paginator(blog_counts, BLOG_EACH_PAGE, int(page))
     blog_list = MDFile.objects.filter(md_draft=False).order_by('-md_pub_time')[index_start - 1: index_end]
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     context = {
         'blog_counts': blog_counts,
@@ -190,7 +203,7 @@ def get_blog_by_url(request, url):
     md_object.md_visit += 1
     md_object.save()
 
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     context = {
         'article_html': md_text_html,
@@ -213,13 +226,13 @@ def get_tags(request):
     :return:
     """
     all_tags = MDFileTagURL.objects.all()
-    # all_tags = [tag for tag in all_tags if not tag.blogs_for_tagURL]
     techblog_category_name = MDFileCategoryURL.objects.get(md_category_url='techblog').md_category_name
     techblog_tags = all_tags.filter(md_tag_name__mdfile__md_category=techblog_category_name).distinct()
     techblog_tags = [t for t in techblog_tags if t.blogs_for_tagURL]
     not_techblog_tags = all_tags.exclude(md_tag_name__mdfile__md_category=techblog_category_name)
     not_techblog_tags = [t for t in not_techblog_tags if t.blogs_for_tagURL]
-    site_info = SiteInfo.objects.get(site_is_published=True)
+
+    site_info = get_site_info()
     update_site_visit.delay()
     context = {
         "tags": not_techblog_tags,
@@ -250,7 +263,7 @@ def get_list_by_tag(request, tag_url):
     (last_page_num, next_page_num), (index_start, index_end) = paginator(blog_counts, BLOG_EACH_PAGE, page)
     blog_list = MDFile.objects.filter(md_tag=tag_name).exclude(md_draft=True).order_by("-md_pub_time")[
                 index_start - 1: index_end]
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     context = {
         'blog_counts': blog_counts,
@@ -279,7 +292,7 @@ def get_list_by_category(request, category_url):
     (last_page_num, next_page_num), (index_start, index_end) = paginator(blog_counts, BLOG_EACH_PAGE, page)
     blog_list = MDFile.objects.filter(md_category=category_name).exclude(md_draft=True).order_by('-md_pub_time')[
                 index_start - 1 if index_start != 0 else index_start: index_end]
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     context = {
         'blog_counts': blog_counts,
@@ -308,7 +321,7 @@ def about_me(request):
     # if ok:
     #     return HttpResponse(b"{}".format(html))
 
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     about_me_html = MarkdownRender(site_info.site_about_me).html
     context = {
@@ -340,7 +353,7 @@ def get_draft_blog_list(request):
     :return:
     """
     blog_list = MDFile.objects.filter(md_draft=True).order_by('-md_pub_time')
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     context = {
         'blog_list': blog_list,
         'site_title': site_info.site_title,
@@ -406,21 +419,25 @@ def get_weibo_list(request):
     except:
         page = 1
     weibo_counts = Weibo.objects.filter(wb_draft=False).count()
-    (last_page_num, next_page_num), (index_start, index_end) = paginator(weibo_counts, WEIBO_EACH_PAGE, page)
+    if weibo_counts == 0:
+        weibo_list = []
+        index_start, index_end, last_page_num, next_page_num = 0, 0, 1, 1
+    else:
+        (last_page_num, next_page_num), (index_start, index_end) = paginator(weibo_counts, WEIBO_EACH_PAGE, page)
 
-    weibo_object_list = Weibo.objects.filter(wb_draft=False).order_by('-wb_pub_time')[index_start - 1: index_end]
-    weibo_html_list = [MarkdownRender(wb.wb_text).html for wb in weibo_object_list]
+        weibo_object_list = Weibo.objects.filter(wb_draft=False).order_by('-wb_pub_time')[index_start - 1: index_end]
+        weibo_html_list = [MarkdownRender(wb.wb_text).html for wb in weibo_object_list]
 
-    # gather weibo_object and weibo_html to a dict_list
-    weibo_list = list()
-    for wb, wb_html in zip(weibo_object_list, weibo_html_list):
-        _d = {
-            'wb_object': wb,
-            'wb_html': wb_html
-        }
-        weibo_list.append(_d)
+        # gather weibo_object and weibo_html to a dict_list
+        weibo_list = list()
+        for wb, wb_html in zip(weibo_object_list, weibo_html_list):
+            _d = {
+                'wb_object': wb,
+                'wb_html': wb_html
+            }
+            weibo_list.append(_d)
 
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     context = {
         'weibo_list': weibo_list,
@@ -445,7 +462,7 @@ def get_weibo_by_url(request, url):
     """
     _weibo = Weibo.objects.get(wb_url=url)
     weibo_html = MarkdownRender(_weibo.wb_text).html
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     context = {
         'wb_pub_time': _weibo.wb_pub_time,
@@ -659,7 +676,7 @@ def get_site_visit(request):
             'x_list': [k for k, v in month_visit],
             'y_list': [v for k, v in month_visit]
         }
-    site_info = SiteInfo.objects.get(site_is_published=True)
+    site_info = get_site_info()
     update_site_visit.delay()
     context.update({
         "site_title": site_info.site_title,
