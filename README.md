@@ -19,10 +19,10 @@ ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的�
 
 ## Docker一键运行
 1. 如果你本地安装了docker，即可通过一下命令将ThinkBlog运行起来，快速体验：  
-```docker run -d --name think_blog -p 8000:8000 eacon/ThinkBlog```
+```docker run -d --name blog -p 8000:8000 eacon/thinkblog```
 
 2. 创建你的管理员密码：  
-```docker exec -it think_blog python manage.py createsuperuser```
+```docker exec -it blog python manage.py createsuperuser```
 
 3. 本地浏览器访问：   
 ```
@@ -83,6 +83,7 @@ ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的�
         supervisor
         mistune
     ```    
+    
     
     
     
