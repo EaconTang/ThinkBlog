@@ -17,6 +17,18 @@ ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的�
 - 使用uwsgi+supervisord启动和管理进程
 
 
+## Docker一键运行
+1. 如果你本地安装了docker，即可通过一下命令将ThinkBlog运行起来，快速体验（docker发布版不包含celery-redis的功能）：  
+```docker run -d --name think_blog -p 8000:8000 eacon/ThinkBlog```
+
+2. 创建你的管理员密码：  
+```docker exec -it think_blog python manage.py createsuperuser```
+
+3. 本地浏览器访问：   
+```http://localhost:8000```
+
+
+
 ## 部署手记
 - [可选]virtualenv
 - pip install -r requirements.txt
@@ -50,6 +62,24 @@ ThinkBlog是基于Django开发的简洁博客网站，实现了博客网站的�
 
 
 ## 依赖
-- 数据库：
+- 轻量级数据库：
     - sqlite3
     - redis
+- python库：
+    ```
+        django==1.9
+        markdown
+        Pillow
+        pygments
+        pytz
+        requests
+        sitemap-generator
+        uwsgi
+        celery==4.0
+        redis
+        supervisor
+        mistune
+    ```    
+    
+    
+    
