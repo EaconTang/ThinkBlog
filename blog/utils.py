@@ -59,7 +59,7 @@ class CodeHighlighter(object):
     """
 
     def __init__(self, html, height_lighter='pygments', code_language=None):
-        self._html = str(html)
+        self._html = html
         self.code_language = code_language
         if height_lighter != 'pygments':
             raise NotImplementedError
@@ -87,7 +87,7 @@ class CodeHighlighter(object):
     def html(self):
         blocks = self.code_blocks
         lighted_blocks = [self.light_block(b) for b in blocks]
-        blocks = ['<pre><code>{}</code></pre>'.format(b) for b in blocks]
+        blocks = [u'<pre><code>{}</code></pre>'.format(b) for b in blocks]
         for i in range(len(blocks)):
             self._html = self._html.replace(blocks[i], lighted_blocks[i])
         return self._html
